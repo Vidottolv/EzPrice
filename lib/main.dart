@@ -13,28 +13,39 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return MaterialApp(
       title: 'EzPrice',
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Color.fromRGBO(51, 24, 117, 1),
         ),
-        body: Stack(children: [
-          Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('images/gradMorpheu.png'),
-                fit: BoxFit.cover,
+        body: Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('images/gradMorpheu.png'),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: Center(),
+            ),
+            Positioned(
+              top: screenHeight * 0.75,
+              left: 0,
+              right: 0,
+              child: Container(
+                alignment: Alignment.center,
+                child: Image.asset(
+                  'images/ezprice-removebg-preview.png',
+                  height: 120,
+                ),
               ),
             ),
-            child: Center(
-              child: Container(
-                  alignment: Alignment.topCenter,
-                  child: Image.asset('images/ezprice-removebg-preview.png',
-                      height: 120)),
-            ),
-          ),
-        ]),
+          ],
+        ),
       ),
     );
   }
