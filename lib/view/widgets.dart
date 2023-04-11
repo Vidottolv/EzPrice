@@ -26,24 +26,22 @@ class Widgets extends StatelessWidget {
 
   widgetEmail() {
     return Container(
-      padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
+      padding: const EdgeInsets.fromLTRB(15, 3, 15, 3),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: const Color.fromRGBO(136, 196, 77, 0.9))),
+          borderRadius: BorderRadius.circular(30),
+          border: Border.all(color: Colors.black)),
       child: TextField(
-        style: TextStyle(color: Color.fromRGBO(136, 196, 77, 1)),
+        style: TextStyle(color: Colors.black),
         autofocus: true,
         decoration: InputDecoration(
           border: InputBorder.none,
           icon: Icon(
             Icons.person_rounded,
-            color: Color.fromRGBO(136, 196, 77, 0.9),
+            color: Colors.black,
           ),
           hintText: 'Seu E-mail',
           hintStyle: TextStyle(
-              color: Color.fromRGBO(136, 196, 77, 0.9),
-              fontWeight: FontWeight.bold,
-              fontSize: 15),
+              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),
         ),
       ),
     );
@@ -51,25 +49,23 @@ class Widgets extends StatelessWidget {
 
   widgetSenha() {
     return Container(
-      padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
+      padding: const EdgeInsets.fromLTRB(15, 3, 15, 3),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: Color.fromRGBO(136, 196, 77, 0.9))),
+          borderRadius: BorderRadius.circular(30),
+          border: Border.all(color: Colors.black)),
       child: TextField(
-        style: TextStyle(color: Color.fromRGBO(136, 196, 77, 1)),
+        style: TextStyle(color: Colors.black),
         obscureText: true,
         autofocus: true,
         decoration: InputDecoration(
           border: InputBorder.none,
           icon: Icon(
             Icons.password_rounded,
-            color: Color.fromRGBO(136, 196, 77, 0.9),
+            color: Colors.black,
           ),
           hintText: 'Sua Senha',
           hintStyle: TextStyle(
-              color: Color.fromRGBO(136, 196, 77, 0.9),
-              fontWeight: FontWeight.bold,
-              fontSize: 15),
+              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),
         ),
       ),
     );
@@ -80,7 +76,7 @@ class Widgets extends StatelessWidget {
 //      style: ElevatedButton.styleFrom(
 //        backgroundColor: Color.fromRGBO(13, 12, 12, 0),
 //        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-//        side: BorderSide(color: Color.fromRGBO(136, 196, 77, 0.9)),
+//        side: BorderSide(color: Colors.black),
 //       ),
 //      onPressed: () {
 //        Navigator.push(
@@ -92,7 +88,7 @@ class Widgets extends StatelessWidget {
 //        child: Center(
 //          child: Text(
 //            'Entrar',
-//            style: TextStyle(color: Color.fromRGBO(136, 196, 77, 0.9)),
+//            style: TextStyle(color: Colors.black),
 //          ),
 //        ),
 //      ),
@@ -104,7 +100,7 @@ class Widgets extends StatelessWidget {
 //      style: ElevatedButton.styleFrom(
 //        primary: Color.fromRGBO(13, 12, 12, 0),
 //        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-//        side: BorderSide(color: Color.fromRGBO(136, 196, 77, 0.9)),
+//        side: BorderSide(color: Colors.black),
 //      ),
 //      onPressed: () {
 //        Navigator.push(
@@ -116,7 +112,7 @@ class Widgets extends StatelessWidget {
 //        child: Center(
 //          child: Text(
 //            'Esqueceu a senha?',
-//            style: TextStyle(color: Color.fromRGBO(136, 196, 77, 0.9)),
+//            style: TextStyle(color: Colors.black),
 //          ),
 //        ),
 //      ),
@@ -129,7 +125,7 @@ class Widgets extends StatelessWidget {
 //        Navigator.push(
 //            context, MaterialPageRoute(builder: (context) => Sobrenos()));
 //      },
-//      child: Icon(Icons.info, color: const Color.fromRGBO(136, 196, 77, 0.9)),
+//      child: Icon(Icons.info, color: Colors.black),
         );
   }
 
@@ -138,7 +134,7 @@ class Widgets extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: Color.fromRGBO(136, 196, 77, 0.9))),
+          border: Border.all(color: Colors.black)),
       child: TextField(
         style: TextStyle(color: Color.fromRGBO(136, 196, 77, 1)),
         obscureText: true,
@@ -147,13 +143,11 @@ class Widgets extends StatelessWidget {
           border: InputBorder.none,
           icon: Icon(
             Icons.password_rounded,
-            color: Color.fromRGBO(136, 196, 77, 0.9),
+            color: Colors.black,
           ),
           hintText: 'Insira a nova senha',
           hintStyle: TextStyle(
-              color: Color.fromRGBO(136, 196, 77, 0.9),
-              fontWeight: FontWeight.bold,
-              fontSize: 15),
+              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),
         ),
       ),
     );
@@ -164,7 +158,7 @@ class Widgets extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: Color.fromRGBO(136, 196, 77, 0.9))),
+          border: Border.all(color: Colors.black)),
       child: TextField(
         style: TextStyle(color: Color.fromRGBO(136, 196, 77, 1)),
         obscureText: true,
@@ -173,13 +167,11 @@ class Widgets extends StatelessWidget {
           border: InputBorder.none,
           icon: Icon(
             Icons.password_rounded,
-            color: Color.fromRGBO(136, 196, 77, 0.9),
+            color: Colors.black,
           ),
           hintText: 'Confirme sua senha',
           hintStyle: TextStyle(
-              color: Color.fromRGBO(136, 196, 77, 0.9),
-              fontWeight: FontWeight.bold,
-              fontSize: 15),
+              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),
         ),
       ),
     );
@@ -190,7 +182,7 @@ class Widgets extends StatelessWidget {
 //      padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
 //      decoration: BoxDecoration(
 //          borderRadius: BorderRadius.circular(20),
-//          border: Border.all(color: Color.fromRGBO(136, 196, 77, 0.9))),
+//          border: Border.all(color: Colors.black)),
 //      child: TextField(
 //        style: TextStyle(color: Color.fromRGBO(136, 196, 77, 1)),
 //        obscureText: true,
@@ -199,11 +191,11 @@ class Widgets extends StatelessWidget {
 //          border: InputBorder.none,
 //          icon: Icon(
 //            Icons.password_rounded,
-//            color: Color.fromRGBO(136, 196, 77, 0.9),
+//            color: Colors.black,
 //          ),
 //          hintText: 'Confirme sua senha',
 //          hintStyle: TextStyle(
-//              color: Color.fromRGBO(136, 196, 77, 0.9),
+//              color: Colors.black,
 //              fontWeight: FontWeight.bold,
 //              fontSize: 15),
 //        ),
@@ -216,7 +208,7 @@ class Widgets extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: Color.fromRGBO(136, 196, 77, 0.9))),
+          border: Border.all(color: Colors.black)),
       child: TextField(
         style: TextStyle(color: Color.fromRGBO(136, 196, 77, 1)),
         autofocus: true,
@@ -224,13 +216,11 @@ class Widgets extends StatelessWidget {
           border: InputBorder.none,
           icon: Icon(
             Icons.password_rounded,
-            color: Color.fromRGBO(136, 196, 77, 0.9),
+            color: Colors.black,
           ),
           hintText: 'Qual o nome desta receita?',
           hintStyle: TextStyle(
-              color: Color.fromRGBO(136, 196, 77, 0.9),
-              fontWeight: FontWeight.bold,
-              fontSize: 15),
+              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),
         ),
       ),
     );
@@ -243,7 +233,7 @@ class Widgets extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: Color.fromRGBO(136, 196, 77, 0.9))),
+          border: Border.all(color: Colors.black)),
       child: TextField(
         style: TextStyle(color: Color.fromRGBO(136, 196, 77, 1)),
         autofocus: true,
@@ -251,9 +241,7 @@ class Widgets extends StatelessWidget {
           border: InputBorder.none,
           hintText: 'Insira o material',
           hintStyle: TextStyle(
-              color: Color.fromRGBO(136, 196, 77, 0.9),
-              fontWeight: FontWeight.bold,
-              fontSize: 15),
+              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),
         ),
       ),
     );
@@ -266,7 +254,7 @@ class Widgets extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: Color.fromRGBO(136, 196, 77, 0.9))),
+          border: Border.all(color: Colors.black)),
       child: TextField(
         style: TextStyle(color: Color.fromRGBO(136, 196, 77, 1)),
         autofocus: true,
@@ -274,9 +262,7 @@ class Widgets extends StatelessWidget {
           border: InputBorder.none,
           hintText: 'Preço R\$',
           hintStyle: TextStyle(
-              color: Color.fromRGBO(136, 196, 77, 0.9),
-              fontWeight: FontWeight.bold,
-              fontSize: 15),
+              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),
         ),
       ),
     );
@@ -289,7 +275,7 @@ class Widgets extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: Color.fromRGBO(136, 196, 77, 0.9))),
+          border: Border.all(color: Colors.black)),
       child: TextField(
         style: TextStyle(color: Color.fromRGBO(136, 196, 77, 1)),
         autofocus: true,
@@ -297,9 +283,7 @@ class Widgets extends StatelessWidget {
           border: InputBorder.none,
           hintText: 'Quant Kg',
           hintStyle: TextStyle(
-              color: Color.fromRGBO(136, 196, 77, 0.9),
-              fontWeight: FontWeight.bold,
-              fontSize: 15),
+              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),
         ),
       ),
     );
@@ -310,7 +294,7 @@ class Widgets extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         primary: Color.fromRGBO(13, 12, 12, 0),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        side: BorderSide(color: Color.fromRGBO(136, 196, 77, 0.9)),
+        side: BorderSide(color: Colors.black),
       ),
       onPressed: () {},
       child: SizedBox(
@@ -319,7 +303,7 @@ class Widgets extends StatelessWidget {
         child: Center(
           child: Text(
             'Esqueceu a senha?',
-            style: TextStyle(color: Color.fromRGBO(136, 196, 77, 0.9)),
+            style: TextStyle(color: Colors.black),
           ),
         ),
       ),
