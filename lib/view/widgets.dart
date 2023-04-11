@@ -3,7 +3,7 @@
 //import 'package:app01_hello_world/esquecesenha.dart';
 import 'package:flutter/material.dart';
 //import 'package:app01_hello_world/sobrenos.dart';
-//import 'package:app01_hello_world/cadastro.dart';
+import 'package:ezprice/view/cadastro.dart';
 
 class Widgets extends StatelessWidget {
   const Widgets({Key? key}) : super(key: key);
@@ -16,8 +16,8 @@ class Widgets extends StatelessWidget {
         widgetSenha(),
         widgetSobreNos(context),
         widgetConfirmaSenha(),
-//        widgetEntrar(context),
-        //      widgetEsqueceSenha(context),
+        widgetEntrar(context),
+        //widgetEsqueceSenha(context),
         widgetNovaSenha(),
         widgetNomeReceita(),
       ],
@@ -70,30 +70,30 @@ class Widgets extends StatelessWidget {
       ),
     );
   }
-//
-//  widgetEntrar(BuildContext context) {
-//    return ElevatedButton(
-//      style: ElevatedButton.styleFrom(
-//        backgroundColor: Color.fromRGBO(13, 12, 12, 0),
-//        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-//        side: BorderSide(color: Colors.black),
-//       ),
-//      onPressed: () {
-//        Navigator.push(
-//            context, MaterialPageRoute(builder: (context) => Cadastro()));
-//      },
-//      child: SizedBox(
-//        width: 50,
-//        height: 30,
-//        child: Center(
-//          child: Text(
-//            'Entrar',
-//            style: TextStyle(color: Colors.black),
-//          ),
-//        ),
-//      ),
-//    );
-//  }
+
+  widgetEntrar(BuildContext context) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.black.withOpacity(0),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        side: BorderSide(color: Colors.black),
+      ),
+      onPressed: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Cadastro()));
+      },
+      child: SizedBox(
+        width: 50,
+        height: 30,
+        child: Center(
+          child: Text(
+            'Entrar',
+            style: TextStyle(color: Colors.black),
+          ),
+        ),
+      ),
+    );
+  }
 
 //  widgetEsqueceSenha(BuildContext context) {
 //    return ElevatedButton(
