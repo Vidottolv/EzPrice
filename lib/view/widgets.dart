@@ -2,7 +2,7 @@
 
 //import 'package:app01_hello_world/esquecesenha.dart';
 import 'package:flutter/material.dart';
-//import 'package:app01_hello_world/sobrenos.dart';
+import 'package:ezprice/view/Sobrenos.dart';
 import 'package:ezprice/view/cadastro.dart';
 
 class Widgets extends StatelessWidget {
@@ -121,12 +121,12 @@ class Widgets extends StatelessWidget {
 
   widgetSobreNos(BuildContext context) {
     return InkWell(
-//      onTap: () {
-//        Navigator.push(
-//            context, MaterialPageRoute(builder: (context) => Sobrenos()));
-//      },
-//      child: Icon(Icons.info, color: Colors.black),
-        );
+      onTap: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Sobrenos()));
+      },
+      child: Icon(Icons.info, color: Colors.black),
+    );
   }
 
   widgetNovaSenha() {
