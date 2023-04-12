@@ -43,7 +43,7 @@ class Cadastro extends StatelessWidget {
                         key: formKey,
                         child: Column(children: [
                           Widgets().widgetNomeReceita(),
-                          SizedBox(height: 25),
+                          SizedBox(height: 15),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [

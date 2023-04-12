@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, file_names
 
 import 'package:flutter/material.dart';
 
@@ -13,10 +13,8 @@ class Sobrenos extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage('images/gradMorpheu.png'))),
-            width: double.infinity,
-            height: double.infinity,
-            alignment: Alignment.center,
+                    image: AssetImage('images/gradMorpheu.png'),
+                    fit: BoxFit.cover)),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

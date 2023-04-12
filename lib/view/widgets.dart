@@ -207,10 +207,10 @@ class Widgets extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(30),
           border: Border.all(color: Colors.black)),
       child: TextField(
-        style: TextStyle(color: Color.fromRGBO(136, 196, 77, 1)),
+        style: TextStyle(color: Colors.black),
         autofocus: true,
         decoration: InputDecoration(
           border: InputBorder.none,
@@ -232,10 +232,10 @@ class Widgets extends StatelessWidget {
       width: 200,
       padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(30),
           border: Border.all(color: Colors.black)),
       child: TextField(
-        style: TextStyle(color: Color.fromRGBO(136, 196, 77, 1)),
+        style: TextStyle(color: Colors.black),
         autofocus: true,
         decoration: InputDecoration(
           border: InputBorder.none,
@@ -253,10 +253,10 @@ class Widgets extends StatelessWidget {
       width: 100,
       padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(30),
           border: Border.all(color: Colors.black)),
       child: TextField(
-        style: TextStyle(color: Color.fromRGBO(136, 196, 77, 1)),
+        style: TextStyle(color: Colors.black),
         autofocus: true,
         decoration: InputDecoration(
           border: InputBorder.none,
@@ -274,10 +274,10 @@ class Widgets extends StatelessWidget {
       width: 100,
       padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(30),
           border: Border.all(color: Colors.black)),
       child: TextField(
-        style: TextStyle(color: Color.fromRGBO(136, 196, 77, 1)),
+        style: TextStyle(color: Colors.black),
         autofocus: true,
         decoration: InputDecoration(
           border: InputBorder.none,
