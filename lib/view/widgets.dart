@@ -1,9 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, deprecated_member_use
 
-//import 'package:app01_hello_world/esquecesenha.dart';
 import 'package:flutter/material.dart';
 import 'package:ezprice/view/Sobrenos.dart';
 import 'package:ezprice/view/cadastro.dart';
+import 'package:ezprice/view/esquecesenha.dart';
+import 'package:ezprice/view/cadastrouser.dart';
 
 class Widgets extends StatelessWidget {
   const Widgets({Key? key}) : super(key: key);
@@ -17,7 +18,7 @@ class Widgets extends StatelessWidget {
         widgetSobreNos(context),
         widgetConfirmaSenha(),
         widgetEntrar(context),
-        //widgetEsqueceSenha(context),
+        widgetEsqueceSenha(context),
         widgetNovaSenha(),
         widgetNomeReceita(),
       ],
@@ -95,29 +96,41 @@ class Widgets extends StatelessWidget {
     );
   }
 
-//  widgetEsqueceSenha(BuildContext context) {
-//    return ElevatedButton(
-//      style: ElevatedButton.styleFrom(
-//        primary: Color.fromRGBO(13, 12, 12, 0),
-//        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-//        side: BorderSide(color: Colors.black),
-//      ),
-//      onPressed: () {
-//        Navigator.push(
-//            context, MaterialPageRoute(builder: (context) => EsqueceSenha()));
-//      },
-//      child: SizedBox(
-//        width: 130,
-//        height: 30,
-//        child: Center(
-//          child: Text(
-//            'Esqueceu a senha?',
-//            style: TextStyle(color: Colors.black),
-//          ),
-//        ),
-//      ),
-//    );
-//  }
+  widgetNovoAqui(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => CadastroUser()));
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        child: Text(
+          'Novo aqui? Cadastre-se',
+          style: TextStyle(
+            color: Colors.black,
+          ),
+        ),
+      ),
+    );
+  }
+
+  widgetEsqueceSenha(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => EsqueceSenha()));
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        child: Text(
+          'Esqueceu a senha?',
+          style: TextStyle(
+            color: Colors.black,
+          ),
+        ),
+      ),
+    );
+  }
 
   widgetSobreNos(BuildContext context) {
     return InkWell(
@@ -131,12 +144,12 @@ class Widgets extends StatelessWidget {
 
   widgetNovaSenha() {
     return Container(
-      padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
+      padding: const EdgeInsets.fromLTRB(15, 3, 15, 3),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(30),
           border: Border.all(color: Colors.black)),
       child: TextField(
-        style: TextStyle(color: Color.fromRGBO(136, 196, 77, 1)),
+        style: TextStyle(color: Colors.black),
         obscureText: true,
         autofocus: true,
         decoration: InputDecoration(
@@ -153,14 +166,86 @@ class Widgets extends StatelessWidget {
     );
   }
 
-  widgetConfirmaSenha() {
+  widgetNomeUser() {
     return Container(
-      padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
+      padding: const EdgeInsets.fromLTRB(15, 3, 15, 3),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(30),
           border: Border.all(color: Colors.black)),
       child: TextField(
-        style: TextStyle(color: Color.fromRGBO(136, 196, 77, 1)),
+        style: TextStyle(color: Colors.black),
+        obscureText: true,
+        autofocus: true,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          icon: Icon(
+            Icons.password_rounded,
+            color: Colors.black,
+          ),
+          hintText: 'Qual seu nome?',
+          hintStyle: TextStyle(
+              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),
+        ),
+      ),
+    );
+  }
+
+  widgetEmailUser() {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(15, 3, 15, 3),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30),
+          border: Border.all(color: Colors.black)),
+      child: TextField(
+        style: TextStyle(color: Colors.black),
+        obscureText: true,
+        autofocus: true,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          icon: Icon(
+            Icons.password_rounded,
+            color: Colors.black,
+          ),
+          hintText: 'Insira o email a ser usado',
+          hintStyle: TextStyle(
+              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),
+        ),
+      ),
+    );
+  }
+
+  widgetCPF() {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(15, 3, 15, 3),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30),
+          border: Border.all(color: Colors.black)),
+      child: TextField(
+        style: TextStyle(color: Colors.black),
+        obscureText: true,
+        autofocus: true,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          icon: Icon(
+            Icons.password_rounded,
+            color: Colors.black,
+          ),
+          hintText: 'Qual seu CPF?',
+          hintStyle: TextStyle(
+              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),
+        ),
+      ),
+    );
+  }
+
+  widgetConfirmaSenha() {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(15, 3, 15, 3),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30),
+          border: Border.all(color: Colors.black)),
+      child: TextField(
+        style: TextStyle(color: Colors.black),
         obscureText: true,
         autofocus: true,
         decoration: InputDecoration(
@@ -179,12 +264,12 @@ class Widgets extends StatelessWidget {
 
 //    widgetReivindicar() {
 //    return Container(
-//      padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
+//      padding:  const EdgeInsets.fromLTRB(15, 3, 15, 3),
 //      decoration: BoxDecoration(
-//          borderRadius: BorderRadius.circular(20),
+//          borderRadius: BorderRadius.circular(30),
 //          border: Border.all(color: Colors.black)),
 //      child: TextField(
-//        style: TextStyle(color: Color.fromRGBO(136, 196, 77, 1)),
+//        style: TextStyle(color: Colors.black),
 //        obscureText: true,
 //        autofocus: true,
 //        decoration: InputDecoration(
@@ -205,7 +290,7 @@ class Widgets extends StatelessWidget {
 
   widgetNomeReceita() {
     return Container(
-      padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
+      padding: const EdgeInsets.fromLTRB(15, 3, 15, 3),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
           border: Border.all(color: Colors.black)),
@@ -293,7 +378,7 @@ class Widgets extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         primary: Color.fromRGBO(13, 12, 12, 0),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
         side: BorderSide(color: Colors.black),
       ),
       onPressed: () {},

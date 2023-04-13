@@ -67,6 +67,10 @@ class TelaPrincipal extends StatelessWidget {
                         Widgets().widgetSenha(),
                         SizedBox(height: 10),
                         Widgets().widgetEntrar(context),
+                        SizedBox(height: 10),
+                        Widgets().widgetEsqueceSenha(context),
+                        SizedBox(height: 10),
+                        Widgets().widgetNovoAqui(context),
                         SizedBox(height: 30),
                         Widgets().widgetSobreNos(context)
                       ])),
