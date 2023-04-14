@@ -1,5 +1,6 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last
 
+import 'package:ezprice/view/Sobrenos.dart';
 import 'package:ezprice/view/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -71,12 +72,44 @@ class TelaPrincipal extends StatelessWidget {
                         Widgets().widgetEsqueceSenha(context),
                         SizedBox(height: 10),
                         Widgets().widgetNovoAqui(context),
-                        SizedBox(height: 30),
-                        Widgets().widgetSobreNos(context)
                       ])),
-            )
+            ),
           ])
         ],
+      ),
+      drawer: Drawer(
+        child: Container(
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('images/gradMorpheu.png'),
+                  fit: BoxFit.cover)),
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              UserAccountsDrawerHeader(
+                accountEmail: Text('lucasvidotto12@gmail.com'),
+                accountName: Text('Lucas Vidotto'),
+                decoration:
+                    BoxDecoration(color: Color.fromRGBO(51, 24, 117, 1)),
+                currentAccountPicture: CircleAvatar(
+                  child: Text(
+                    'UN',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  backgroundColor: Color.fromRGBO(51, 24, 117, 0.7),
+                ),
+              ),
+              ListTile(
+                  leading: Icon(Icons.info),
+                  title: Text('Sobre nós'),
+                  tileColor: Colors.black,
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Sobrenos()));
+                  })
+            ],
+          ),
+        ),
       ),
     );
   }

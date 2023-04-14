@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, deprecated_member_use
 
 import 'package:flutter/material.dart';
-import 'package:ezprice/view/Sobrenos.dart';
+//import 'package:ezprice/view/Sobrenos.dart';
 import 'package:ezprice/view/cadastro.dart';
 import 'package:ezprice/view/esquecesenha.dart';
 import 'package:ezprice/view/cadastrouser.dart';
@@ -15,7 +15,7 @@ class Widgets extends StatelessWidget {
       children: [
         widgetEmail(),
         widgetSenha(),
-        widgetSobreNos(context),
+//        widgetSobreNos(context),
         widgetConfirmaSenha(),
         widgetEntrar(context),
         widgetEsqueceSenha(context),
@@ -132,15 +132,15 @@ class Widgets extends StatelessWidget {
     );
   }
 
-  widgetSobreNos(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Sobrenos()));
-      },
-      child: Icon(Icons.info, color: Colors.black),
-    );
-  }
+//  widgetSobreNos(BuildContext context) {
+//    return InkWell(
+//      onTap: () {
+//        Navigator.push(
+//            context, MaterialPageRoute(builder: (context) => Sobrenos()));
+//      },
+//      child: Icon(Icons.info, color: Colors.black),
+//    );
+//  }
 
   widgetNovaSenha() {
     return Container(
