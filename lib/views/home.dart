@@ -40,7 +40,9 @@ class Home extends StatelessWidget {
                   text:
                       "Consulte as receitas cadastradas no sistema, e veja o valor de cada uma delas.",
                   buttonText: "Consultar",
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/receita/visualizar');
+                  },
                 ),
                 SizedBox(height: 16),
                 TransparentCard(
