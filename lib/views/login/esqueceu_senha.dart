@@ -12,9 +12,7 @@ class EsqueceuSenha extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(51, 24, 117, 1),
         title: const Text('Esqueceu a Senha'),
-        centerTitle: true,
       ),
       body: Container(
         decoration: AppTheme.backgroundDecoration,

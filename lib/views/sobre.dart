@@ -11,8 +11,6 @@ class Sobre extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Sobre a EzPrice'),
-        centerTitle: true,
-        backgroundColor: const Color.fromRGBO(51, 24, 117, 1),
       ),
       drawer: MenuDrawer(email: "aaa.@aaa.com", nome: "aaa"),
       body: Container(

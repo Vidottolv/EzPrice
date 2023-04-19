@@ -18,9 +18,7 @@ class CadastrarUsuario extends StatelessWidget {
     final formKey = GlobalKey<FormState>();
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color.fromRGBO(51, 24, 117, 1),
           title: const Text('Cadastrar Usuário'),
-          centerTitle: true,
         ),
         body: Container(
           decoration: AppTheme.backgroundDecoration,

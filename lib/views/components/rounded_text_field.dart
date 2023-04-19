@@ -5,6 +5,7 @@ class RoundedTextField extends StatelessWidget {
   final String hintText;
   final TextEditingController controller;
   final IconData icon;
+  final TextInputType keyboardType;
   final bool isPassword;
 
   const RoundedTextField(
@@ -13,6 +14,7 @@ class RoundedTextField extends StatelessWidget {
       required this.hintText,
       required this.controller,
       required this.icon,
+      this.keyboardType = TextInputType.text,
       this.isPassword = false})
       : super(key: key);
 
@@ -28,6 +30,7 @@ class RoundedTextField extends StatelessWidget {
         controller: controller,
         style: const TextStyle(color: Colors.white),
         autofocus: true,
+        keyboardType: keyboardType,
         obscureText: isPassword,
         decoration: InputDecoration(
           border: InputBorder.none,

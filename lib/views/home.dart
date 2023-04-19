@@ -14,8 +14,6 @@ class Home extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: const Text("EzPrice"),
-          centerTitle: true,
-          backgroundColor: const Color.fromRGBO(51, 24, 117, 1),
         ),
         drawer: MenuDrawer(
           nome: nome,
@@ -50,7 +48,9 @@ class Home extends StatelessWidget {
                   text:
                       "Consulte os ingredientes cadastrados no sistema, e veja o valor de cada um deles.",
                   buttonText: "Consultar",
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/ingrediente/visualizar');
+                  },
                 ),
               ],
             ),
