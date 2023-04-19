@@ -13,6 +13,17 @@ class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Login'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.info),
+            onPressed: () {
+              Navigator.pushNamed(context, '/sobre');
+            },
+          ),
+        ],
+      ),
       body: Container(
         decoration: AppTheme.backgroundDecoration,
         child: Center(
@@ -30,15 +41,7 @@ class Login extends StatelessWidget {
                     fontStyle: FontStyle.italic,
                   ),
                 ),
-                SizedBox(height: 10),
-                Text(
-                  'Faça login para continuar',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15,
-                  ),
-                ),
-                SizedBox(height: 20),
+                SizedBox(height: 16),
                 RoundedTextField(
                   controller: emailController,
                   labelText: "Email",
