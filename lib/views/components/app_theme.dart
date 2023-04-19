@@ -5,7 +5,8 @@ class AppTheme {
     scaffoldBackgroundColor: Colors.transparent,
     canvasColor: Colors.transparent,
     appBarTheme: const AppBarTheme(
-      backgroundColor: Colors.transparent,
+      backgroundColor: Color.fromRGBO(51, 24, 117, 1),
+      centerTitle: true,
       elevation: 0,
     ),
     textTheme: const TextTheme(

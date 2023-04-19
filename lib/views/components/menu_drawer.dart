@@ -33,7 +33,9 @@ class MenuDrawer extends StatelessWidget {
             title: const Text("Consultar Ingredientes"),
             tileColor: Colors.black.withOpacity(0.6),
             leading: const Icon(Icons.list, color: Colors.white),
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, '/ingrediente/visualizar');
+            },
           ),
           ListTile(
             title: const Text("Precificação"),
