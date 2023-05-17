@@ -1,8 +1,11 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:ezprice/views/components/app_theme.dart';
 import 'package:ezprice/views/components/forgot_password.dart';
 import 'package:ezprice/views/components/rounded_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ezprice/controller/login_controller.dart';
 
 class Login extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
@@ -72,7 +75,8 @@ class Login extends StatelessWidget {
                     SizedBox(width: 10),
                     ElevatedButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, '/home');
+                          LoginController().login(context, emailController.text,
+                              senhaController.text);
                         },
                         child: Text('Entrar')),
                   ],

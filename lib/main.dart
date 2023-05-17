@@ -1,3 +1,5 @@
+import 'firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:ezprice/views/components/app_theme.dart';
 import 'package:ezprice/views/login/login.dart';
@@ -11,7 +13,10 @@ import 'package:ezprice/views/ingrediente/visualizar_ingredientes.dart';
 import 'package:ezprice/views/receita/cadastrar_receita.dart';
 import 'package:ezprice/views/receita/visualizar_receitas.dart';
 
-void main() {
+Future<void> main() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,

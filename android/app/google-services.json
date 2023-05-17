@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "698798091910",
+    "project_id": "ezprice-1ea63",
+    "storage_bucket": "ezprice-1ea63.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:698798091910:android:84327d6b5060b2e5ab2b07",
+        "android_client_info": {
+          "package_name": "com.example.ezprice"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "698798091910-6png4ug6qcpac0her2q48l7fevuteaj6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8h1kRevN_Rx_uyyG1FV3W-WH_jij-q5U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "698798091910-6png4ug6qcpac0her2q48l7fevuteaj6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

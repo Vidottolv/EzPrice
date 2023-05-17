@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:ezprice/controller/login_controller.dart';
 import 'package:ezprice/views/components/rounded_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:ezprice/views/components/app_theme.dart';
@@ -56,9 +57,8 @@ class CadastrarUsuario extends StatelessWidget {
                   SizedBox(height: 16),
                   ElevatedButton(
                       onPressed: () {
-                        if (formKey.currentState!.validate()) {
-                          Navigator.pushNamed(context, '/login');
-                        }
+                        LoginController().criarConta(context, nomeController,
+                            emailController, senhaController);
                       },
                       child: const Text('Cadastrar'))
                 ],
