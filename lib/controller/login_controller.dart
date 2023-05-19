@@ -25,7 +25,7 @@ class LoginController {
       });
 
       sucesso(context, 'Usuário criado com sucesso.');
-      Navigator.pushNamed(context, '/cadastre-se');
+      Navigator.pop(context);
     }).catchError((e) {
       //Não foi possível criar a conta
       switch (e.code) {
