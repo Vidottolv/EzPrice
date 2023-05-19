@@ -57,8 +57,11 @@ class CadastrarUsuario extends StatelessWidget {
                   SizedBox(height: 16),
                   ElevatedButton(
                       onPressed: () {
-                        LoginController().criarConta(context, nomeController,
-                            emailController, senhaController);
+                        LoginController().criarConta(
+                            context,
+                            nomeController.text,
+                            emailController.text,
+                            senhaController.text);
                       },
                       child: const Text('Cadastrar'))
                 ],
