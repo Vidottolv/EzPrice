@@ -60,11 +60,24 @@ class MenuDrawer extends StatelessWidget {
             onTap: () {},
           ),
           ListTile(
+            title: const Text("Menu"),
+            tileColor: Colors.black.withOpacity(0.6),
+            leading: const Icon(
+              Icons.home,
+              color: Colors.white,
+            ),
+            onTap: () {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, '/home', (route) => false);
+            },
+          ),
+          ListTile(
             title: const Text("Sair"),
             tileColor: Colors.black.withOpacity(0.6),
             leading: const Icon(Icons.exit_to_app, color: Colors.white),
             onTap: () {
-              Navigator.pushNamed(context, '/login');
+              Navigator.pushNamedAndRemoveUntil(
+                  context, '/login', (route) => false);
             },
           ),
         ],
