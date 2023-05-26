@@ -47,10 +47,6 @@ class VisualizarReceitas extends StatelessWidget {
           ),
         ],
       ),
-      drawer: MenuDrawer(
-        nome: 'Teste de Teste de Teste',
-        email: 'teste@email.com',
-      ),
       body: Container(
         decoration: AppTheme.backgroundDecoration,
         padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),

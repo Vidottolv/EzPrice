@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class MenuDrawer extends StatelessWidget {
+class MenuDrawer extends StatefulWidget {
   final String nome;
   final String email;
 
@@ -11,14 +11,19 @@ class MenuDrawer extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<MenuDrawer> createState() => _MenuDrawerState();
+}
+
+class _MenuDrawerState extends State<MenuDrawer> {
+  @override
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
           UserAccountsDrawerHeader(
-            accountName: Text(nome),
-            accountEmail: Text(email),
+            accountName: Text(widget.nome),
+            accountEmail: Text(widget.email),
             currentAccountPicture: const CircleAvatar(
               child: Icon(Icons.person),
             ),
@@ -43,7 +48,9 @@ class MenuDrawer extends StatelessWidget {
             title: const Text("Precificação"),
             tileColor: Colors.black.withOpacity(0.6),
             leading: const Icon(Icons.list, color: Colors.white),
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, '/receita/precificacao');
+            },
           ),
           ListTile(
             title: const Text("Sobre o EzPrice"),

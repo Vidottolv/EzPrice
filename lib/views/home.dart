@@ -5,7 +5,14 @@ import 'package:ezprice/views/components/transparent_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
+  const Home({super.key});
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
   final User? currentUser = FirebaseAuth.instance.currentUser;
 
   @override
@@ -46,7 +53,9 @@ class Home extends StatelessWidget {
                       text:
                           "Pedindo o valor dos ingredientes da receita, e assim calculando quanto você pode vender a mesma e lucrar, pode até mesmo escolher a margem de lucro desejada.",
                       buttonText: "Começar",
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/receita/precificacao');
+                      },
                     ),
                     SizedBox(height: 16),
                     TransparentCard(

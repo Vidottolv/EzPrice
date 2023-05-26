@@ -2,6 +2,8 @@ import 'package:ezprice/views/components/rounded_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:ezprice/views/components/app_theme.dart';
 import 'package:ezprice/views/components/menu_drawer.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CadastrarIngrediente extends StatelessWidget {
   final TextEditingController nomeController = TextEditingController();
@@ -13,13 +15,28 @@ class CadastrarIngrediente extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    User? user = FirebaseAuth.instance.currentUser;
+    String? nomeUsuario = '';
+    String? emailUsuario = '';
+
+    if (user != null) {
+      FirebaseFirestore.instance
+          .collection('usuarios')
+          .doc(user.uid)
+          .get()
+          .then((DocumentSnapshot<Map<String, dynamic>> userData) {
+        nomeUsuario = userData.get('nome');
+        emailUsuario = user.email;
+      });
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Cadastro de Ingredientes'),
       ),
       drawer: MenuDrawer(
-        nome: 'Teste de Teste de Teste',
-        email: 'teste@email.com',
+        nome: nomeUsuario ?? 'Nome do Usuário',
+        email: emailUsuario ?? 'Email do Usuario',
       ),
       body: Container(
         decoration: AppTheme.backgroundDecoration,

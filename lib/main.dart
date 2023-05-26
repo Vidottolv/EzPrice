@@ -12,6 +12,7 @@ import 'package:ezprice/views/ingrediente/cadastrar_ingrediente.dart';
 import 'package:ezprice/views/ingrediente/visualizar_ingredientes.dart';
 import 'package:ezprice/views/receita/cadastrar_receita.dart';
 import 'package:ezprice/views/receita/visualizar_receitas.dart';
+import 'package:ezprice/views/receita/precificacao.dart';
 
 Future<void> main() async {
   await Firebase.initializeApp(
@@ -28,12 +29,13 @@ Future<void> main() async {
         '/cadastrar': (context) => CadastrarUsuario(),
         '/esqueceu-senha': (context) => EsqueceuSenha(),
         '/esqueceu-senha/nova-senha': (context) => NovaSenha(),
-        '/home': (context) => Home(),
+        '/home': (context) => const Home(),
         '/sobre': (context) => const Sobre(),
         '/ingrediente/cadastrar': (context) => CadastrarIngrediente(),
         '/ingrediente/visualizar': (context) => VisualizarIngredientes(),
         '/receita/cadastrar': (context) => CadastrarReceita(),
         '/receita/visualizar': (context) => VisualizarReceitas(),
+        '/receita/pecificacao': (context) => const Precificar(),
       },
     ),
   );
