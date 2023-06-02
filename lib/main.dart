@@ -35,7 +35,7 @@ Future<void> main() async {
         '/ingrediente/visualizar': (context) => VisualizarIngredientes(),
         '/receita/cadastrar': (context) => CadastrarReceita(),
         '/receita/visualizar': (context) => VisualizarReceitas(),
-        '/receita/pecificacao': (context) => const Precificar(),
+        '/receita/precificacao': (context) => const Precificar(),
       },
     ),
   );

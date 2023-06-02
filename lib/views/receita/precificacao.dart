@@ -13,18 +13,17 @@ class Precificar extends StatefulWidget {
 }
 
 class _PrecificarState extends State<Precificar> {
-  final TextEditingController nomeController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController senhaController = TextEditingController();
-  final TextEditingController confirmarSenhaController =
-      TextEditingController();
+  final TextEditingController receitaController = TextEditingController();
+  final TextEditingController lucroController = TextEditingController();
+  final TextEditingController gasController = TextEditingController();
+  final TextEditingController ingredienteController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormState>();
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Cadastrar Usuário'),
+          title: const Text('Precificar Receita'),
         ),
         body: Container(
           decoration: AppTheme.backgroundDecoration,
@@ -37,38 +36,34 @@ class _PrecificarState extends State<Precificar> {
                 children: [
                   SizedBox(height: 16),
                   RoundedTextField(
-                      controller: nomeController,
-                      labelText: "Nome",
-                      hintText: "Qual o seu nome?",
-                      icon: Icons.person_rounded),
+                      controller: receitaController,
+                      labelText: "Receita",
+                      hintText: "Qual é a receita?",
+                      icon: Icons.bookmark_rounded),
                   SizedBox(height: 16),
                   RoundedTextField(
-                      controller: emailController,
-                      labelText: "Email",
-                      hintText: "Digite seu Email",
-                      icon: Icons.email_rounded),
+                      controller: lucroController,
+                      labelText: "Lucro",
+                      hintText: "Qual é o percentual de lucro?",
+                      icon: Icons.attach_money_rounded),
                   SizedBox(height: 16),
                   RoundedTextField(
-                      controller: senhaController,
-                      labelText: "Senha",
-                      hintText: "Digite sua Senha",
-                      icon: Icons.lock_rounded),
+                      controller: gasController,
+                      labelText: "Horas de gás",
+                      hintText: "Informe em horas quanto gás é usado.",
+                      icon: Icons.av_timer_rounded),
                   SizedBox(height: 16),
                   RoundedTextField(
-                      controller: confirmarSenhaController,
-                      labelText: "Confirma Senha",
-                      hintText: "Confirme sua Senha",
+                      controller: ingredienteController,
+                      labelText: "Ingrediente",
+                      hintText: "Insira o primeiro ingrediente.",
                       icon: Icons.lock_rounded),
                   SizedBox(height: 16),
                   ElevatedButton(
-                      onPressed: () {
-                        LoginController().criarConta(
-                            context,
-                            nomeController.text,
-                            emailController.text,
-                            senhaController.text);
-                      },
-                      child: const Text('Cadastrar'))
+                      onPressed: () {},
+                      child: const Text('Mais ingredientes?')),
+                  ElevatedButton(
+                      onPressed: () {}, child: const Text('Cadastrar'))
                 ],
               ),
             ),

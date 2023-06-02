@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ezprice/controller/receita_controller.dart';
 import 'package:ezprice/views/components/app_theme.dart';
 import 'package:ezprice/views/components/menu_drawer.dart';
 import 'package:ezprice/views/ingrediente/ingrediente.dart';
@@ -5,32 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:ezprice/views/receita/receita.dart';
 
 class VisualizarReceitas extends StatelessWidget {
-  final List<Receita> receitas = [
-    Receita(
-      receita: 'Café com Leite',
-      ingedientes: [
-        Ingrediente(
-          nome: 'Café',
-          quantidade: 1.0,
-          unidadeMedida: 'Kg',
-          preco: 30.00,
-        ),
-        Ingrediente(
-          nome: 'Açúcar Cristal',
-          quantidade: 1.0,
-          unidadeMedida: 'Kg',
-          preco: 4.00,
-        ),
-        Ingrediente(
-          nome: 'Leite',
-          quantidade: 1.0,
-          unidadeMedida: 'L',
-          preco: 5.50,
-        ),
-      ],
-    )
-  ];
-
   VisualizarReceitas({Key? key}) : super(key: key);
 
   @override
@@ -50,30 +26,42 @@ class VisualizarReceitas extends StatelessWidget {
       body: Container(
         decoration: AppTheme.backgroundDecoration,
         padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
-        child: ListView.builder(
-          itemCount: receitas.length,
-          itemBuilder: (context, index) {
-            return Card(
-              color: Colors.transparent,
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-                side: BorderSide(color: Colors.white, width: 1),
-              ),
-              child: ListTile(
-                title: Text(
-                  receitas[index].receita,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                subtitle: Text(
-                  receitas[index].ingedientes.map((e) => e.nome).join('\n'),
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            );
+        child: FutureBuilder<QuerySnapshot>(
+          future: FirebaseFirestore.instance.collection('receitas').get(),
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+                return Center(
+                  child: Text('Não foi possível conectar.'),
+                );
+              case ConnectionState.waiting:
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              default:
+                final dados = snapshot.requireData;
+                if (dados.size > 0) {
+                  return ListView(
+                    children:
+                        snapshot.data!.docs.map((DocumentSnapshot document) {
+                      Map<String, dynamic> item =
+                          document.data()! as Map<String, dynamic>;
+                      return Card(
+                        child: ListTile(
+                          leading: Icon(Icons.description),
+                          //title: Text(item['receitas']),
+                          //subtitle: Text(item['redimentoReceita']),
+                          onTap: () {},
+                          onLongPress: () {
+                            // ReceitaController.excluir(context, id);
+                          },
+                        ),
+                      );
+                    }).toList(),
+                  );
+                }
+                return Container();
+            }
           },
         ),
       ),
