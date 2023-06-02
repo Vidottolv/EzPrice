@@ -49,8 +49,8 @@ class VisualizarReceitas extends StatelessWidget {
                       return Card(
                         child: ListTile(
                           leading: Icon(Icons.description),
-                          //title: Text(item['receitas']),
-                          //subtitle: Text(item['redimentoReceita']),
+                          //title: Text(item['nomeReceita']),
+                          subtitle: Text(item['redimentoReceita']),
                           onTap: () {},
                           onLongPress: () {
                             // ReceitaController.excluir(context, id);
