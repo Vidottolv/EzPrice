@@ -17,29 +17,51 @@ class VisualizarIngredientes extends StatelessWidget {
     return crossAxisCount;
   }
 
+  Future<List<String>> _getIngredientes() async {
+    final snapshot =
+        await FirebaseFirestore.instance.collection('receitas').get();
+    final receitas = snapshot.docs;
+
+    // Lista de todos os ingredientes
+    final ingredientes = <String>[];
+
+    // Percorrer todas as receitas
+    for (final receita in receitas) {
+      final ingredientesReceita =
+          List<Map<String, dynamic>>.from(receita['ingredientes'] ?? []);
+      for (final ingrediente in ingredientesReceita) {
+        final nomeIngrediente = ingrediente['ingrediente'] as String?;
+        if (nomeIngrediente != null) {
+          ingredientes.add(nomeIngrediente);
+        }
+      }
+    }
+
+    return ingredientes;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Visualizar Ingredientes'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () {
-              Navigator.pushNamed(context, '/ingrediente/cadastrar');
-            },
-          ),
-        ],
+        leading: IconButton(
+          icon: Icon(Icons.home),
+          onPressed: () {
+            Navigator.pushNamedAndRemoveUntil(
+                context, '/home', (route) => false);
+          },
+        ),
       ),
       drawer: MenuDrawer(
         nome: 'Teste de Teste de Teste',
-        email: 'teste@email.com',
+        email: 'teste@example.com',
       ),
       body: Container(
         decoration: AppTheme.backgroundDecoration,
         padding: const EdgeInsets.symmetric(horizontal: 40),
-        child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-          stream: FirebaseFirestore.instance.collection('receitas').snapshots(),
+        child: FutureBuilder<List<String>>(
+          future: _getIngredientes(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(child: CircularProgressIndicator());
@@ -49,25 +71,12 @@ class VisualizarIngredientes extends StatelessWidget {
               return Center(child: Text('No Data'));
             }
 
-            final receitas = snapshot.data!.docs;
+            final ingredientes = snapshot.data!;
 
-            // Obter todos os ingredientes distintos
-            final ingredientes = <String>{};
-            for (final receita in receitas) {
-              final ingredientesReceita =
-                  Set<String>.from(receita['ingredientes'] ?? []);
-              ingredientes.addAll(ingredientesReceita);
-            }
-
-            return GridView.builder(
+            return ListView.builder(
               itemCount: ingredientes.length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: _calculateCrossAxisCount(context),
-                crossAxisSpacing: 8.0,
-                mainAxisSpacing: 8.0,
-              ),
               itemBuilder: (context, index) {
-                final ingrediente = ingredientes.elementAt(index);
+                final ingrediente = ingredientes[index];
 
                 return Card(
                   color: Colors.transparent,
@@ -76,12 +85,8 @@ class VisualizarIngredientes extends StatelessWidget {
                     borderRadius: BorderRadius.circular(15),
                     side: BorderSide(color: Colors.white, width: 1),
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(ingrediente),
-                    ],
+                  child: ListTile(
+                    title: Text(ingrediente),
                   ),
                 );
               },

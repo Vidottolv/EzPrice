@@ -1,11 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ezprice/views/components/app_theme.dart';
 import 'package:ezprice/views/components/menu_drawer.dart';
-import 'package:ezprice/views/components/transparent_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:ezprice/views/home.dart';
-import 'package:ezprice/main.dart';
 
 import 'components/rounded_text_field.dart';
 

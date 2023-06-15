@@ -49,16 +49,6 @@ class _HomeState extends State<Home> {
                   children: [
                     SizedBox(height: 16),
                     TransparentCard(
-                      title: "Precificação",
-                      text:
-                          "Pedindo o valor dos ingredientes da receita, e assim calculando quanto você pode vender a mesma e lucrar, pode até mesmo escolher a margem de lucro desejada.",
-                      buttonText: "Começar",
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/receita/precificacao');
-                      },
-                    ),
-                    SizedBox(height: 16),
-                    TransparentCard(
                       title: "Consultar Receitas",
                       text:
                           "Consulte as receitas cadastradas no sistema, e veja o valor de cada uma delas.",

@@ -1,17 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ezprice/views/components/app_theme.dart';
 import 'package:ezprice/views/components/menu_drawer.dart';
 import 'package:ezprice/views/components/rounded_text_field.dart';
-import 'package:ezprice/views/components/transparent_card.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:ezprice/views/home.dart';
-import 'package:ezprice/main.dart';
 
 class EdicaoReceita extends StatefulWidget {
-  final String receitaNome;
+  final String nomeReceita;
 
-  EdicaoReceita({required this.receitaNome});
+  EdicaoReceita({required this.nomeReceita});
 
   @override
   State<EdicaoReceita> createState() => _EdicaoReceitaState();
@@ -39,7 +34,7 @@ class _EdicaoReceitaState extends State<EdicaoReceita> {
 
     final snapshot = await FirebaseFirestore.instance
         .collection('receitas')
-        .where('nome', isEqualTo: widget.receitaNome)
+        .where('nome', isEqualTo: widget.nomeReceita)
         .limit(1)
         .get();
 
@@ -52,15 +47,18 @@ class _EdicaoReceitaState extends State<EdicaoReceita> {
       lucroPercentual = data['lucro'] ?? '';
       gas = data['gas'] ?? '';
 
-      final List<dynamic> ingredientes = data['ingrediente'] ?? [];
-      final List<dynamic> qtdIngredientes = data['quantidade'] ?? [];
+      final List<dynamic> ingredientes = data['ingredientes'] ?? [];
 
       for (int i = 0; i < ingredientes.length; i++) {
-        final ingrediente = ingredientes[i] ?? '';
-        final qtdIngrediente = qtdIngredientes[i] ?? '';
+        final ingrediente = ingredientes[i]['ingrediente'] ?? '';
+        final quantidade = ingredientes[i]['quantidade'] ?? '';
+        final preco = ingredientes[i]['preco'] ?? '';
 
-        ingredientesList
-            .add({'ingrediente': ingrediente, 'quantidade': qtdIngrediente});
+        ingredientesList.add({
+          'ingrediente': ingrediente,
+          'quantidade': quantidade,
+          'preco': preco,
+        });
       }
     }
 
@@ -128,95 +126,62 @@ class _EdicaoReceitaState extends State<EdicaoReceita> {
                     icon: Icons.local_gas_station,
                     controller: TextEditingController(text: gas),
                   ),
-                  SizedBox(height: 10),
-                  ElevatedButton(
-                    onPressed: _mostraIngredientes,
-                    child: Text('Mostrar Ingredientes'),
+                  SizedBox(height: 20),
+                  Text(
+                    'Ingredientes:',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 10),
-                  StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                    stream: widget.receitaNome.isNotEmpty
-                        ? FirebaseFirestore.instance
-                            .collection('receitas')
-                            .doc(widget.receitaNome)
-                            .snapshots()
-                            .map((snapshot) => snapshot.data()
-                                as QuerySnapshot<Map<String, dynamic>>)
-                        : null, // Retorna null se o valor de widget.receitaNome for vazio
-                    builder: (context, snapshot) {
-                      if (snapshot == null || !snapshot.hasData) {
-                        return Center(child: CircularProgressIndicator());
-                      }
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: ingredientesList.length,
+                    itemBuilder: (context, index) {
+                      final ingrediente =
+                          ingredientesList[index]['ingrediente'];
+                      final quantidade = ingredientesList[index]['quantidade'];
+                      final preco = ingredientesList[index]['preco'];
 
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(child: CircularProgressIndicator());
-                      }
-
-                      final receitaData = snapshot.data!.docs.first.data();
-                      final List<dynamic> ingredientes =
-                          receitaData['ingrediente'] ?? [];
-                      final List<dynamic> qtdIngredientes =
-                          receitaData['quantidade'] ?? [];
-
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ElevatedButton(
-                            onPressed: _mostraIngredientes,
-                            child: Text('Mostrar Ingredientes'),
-                          ),
-                          SizedBox(height: 10),
-                          if (ingredientes.isNotEmpty)
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: List.generate(
-                                ingredientes.length,
-                                (index) => Container(
-                                  margin: EdgeInsets.only(bottom: 10),
-                                  padding: EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                    color: Colors.transparent,
-                                    borderRadius: BorderRadius.circular(10),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.2),
-                                        spreadRadius: 2,
-                                        blurRadius: 5,
-                                        offset: Offset(0, 3),
-                                      ),
-                                    ],
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Ingrediente: ${ingredientes[index]}',
-                                        style: TextStyle(fontSize: 16),
-                                      ),
-                                      SizedBox(height: 5),
-                                      Text(
-                                        'Quantidade: ${qtdIngredientes[index]}',
-                                        style: TextStyle(fontSize: 16),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
+                      return Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Colors.transparent,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.2),
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              offset: Offset(0, 3),
                             ),
-                        ],
+                          ],
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Ingrediente: $ingrediente',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            SizedBox(height: 5),
+                            Text(
+                              'Quantidade: $quantidade',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            SizedBox(height: 5),
+                            Text(
+                              'Preço Pago: $preco',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ],
+                        ),
                       );
                     },
                   ),
                 ],
               ),
             ),
-    );
-  }
-
-  void _mostraIngredientes() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Mostrando ingredientes...')),
     );
   }
 }

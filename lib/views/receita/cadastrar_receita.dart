@@ -4,6 +4,7 @@ import 'package:ezprice/views/components/menu_drawer.dart';
 import 'package:ezprice/views/components/app_theme.dart';
 import 'package:ezprice/views/components/rounded_text_field.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class CadastrarReceita extends StatefulWidget {
   CadastrarReceita({Key? key}) : super(key: key);
@@ -39,32 +40,47 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
     super.dispose();
   }
 
-  void _cadastrarReceita(BuildContext context) {
+  void _cadastrarReceita(BuildContext context) async {
     final String receita = receitaCont.text;
     final String rendimentoReceita = rendimentoReceitaCont.text;
     final String lucro = lucroCont.text;
+    final String gas = gasCont.text;
+    final String uid = FirebaseAuth.instance.currentUser!.uid;
 
     List<Map<String, dynamic>> ingredientes = [];
+    double precoVenda = 0.0;
+
     for (int i = 0; i < ingredContList.length; i++) {
       final String ingred = ingredContList[i].text;
       final String QTDIngred = QTDIngredContList[i].text;
       final String precoIngred = precoIngredContList[i].text;
 
       if (ingred.isNotEmpty && QTDIngred.isNotEmpty && precoIngred.isNotEmpty) {
+        double precoIngrediente = double.parse(precoIngred);
+        double quantidade = double.parse(QTDIngred);
+
         ingredientes.add({
-          'ingrediente': ingred,
-          'quantidade': QTDIngred,
-          'preco': precoIngred,
+          'nome': ingred,
+          'quantidade': quantidade,
+          'preco': precoIngrediente,
         });
+
+        precoVenda += precoIngrediente * quantidade;
       }
     }
 
     if (receita.isNotEmpty && ingredientes.isNotEmpty) {
+      double tempoGas = double.parse(gas);
+      precoVenda +=
+          (1.10 * tempoGas) + (precoVenda * double.parse(lucro) / 100);
+
       FirebaseFirestore.instance.collection('receitas').add({
         'nome': receita,
         'rendimentoReceita': rendimentoReceita,
-        'lucro': lucro, // Adicione o campo 'lucro' ao documento sendo salvo
+        'lucro': double.parse(lucro),
+        'precoVenda': precoVenda,
         'ingredientes': ingredientes,
+        'uid': uid,
       }).then((value) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Receita cadastrada com sucesso!')),

@@ -1,10 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ezprice/controller/receita_controller.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ezprice/views/components/app_theme.dart';
-import 'package:ezprice/views/components/menu_drawer.dart';
-import 'package:ezprice/views/ingrediente/ingrediente.dart';
 import 'package:flutter/material.dart';
-import 'package:ezprice/views/receita/receita.dart';
 
 class VisualizarReceitas extends StatefulWidget {
   VisualizarReceitas({Key? key}) : super(key: key);
@@ -14,6 +11,23 @@ class VisualizarReceitas extends StatefulWidget {
 }
 
 class _VisualizarReceitasState extends State<VisualizarReceitas> {
+  late String uidUsuarioLogado;
+
+  @override
+  void initState() {
+    super.initState();
+    obterUidUsuarioLogado();
+  }
+
+  Future<void> obterUidUsuarioLogado() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      setState(() {
+        uidUsuarioLogado = user.uid;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +46,10 @@ class _VisualizarReceitasState extends State<VisualizarReceitas> {
         decoration: AppTheme.backgroundDecoration,
         padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
         child: FutureBuilder<QuerySnapshot>(
-          future: FirebaseFirestore.instance.collection('receitas').get(),
+          future: FirebaseFirestore.instance
+              .collection('receitas')
+              .where('uid', isEqualTo: uidUsuarioLogado)
+              .get(),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
@@ -53,8 +70,9 @@ class _VisualizarReceitasState extends State<VisualizarReceitas> {
                           document.data()! as Map<String, dynamic>;
                       String nomeReceita = item['nome'] ?? '';
                       String rendimentoReceita =
-                          item['rendimentoReceita'] ?? '';
-                      String lucroPercentual = item['lucro'] ?? '';
+                          item['rendimentoReceita'].toString() ?? '';
+                      String lucroPercentual = item['lucro'].toString() ?? '';
+                      double precoVenda = item['precoVenda'] ?? 0.0;
                       return Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 40, vertical: 16),
@@ -147,40 +165,9 @@ class _VisualizarReceitasState extends State<VisualizarReceitas> {
                                               ),
                                             ),
                                             onPressed: () {
-                                              // Implementar ação de precificar
-                                              Navigator.pop(context);
-                                            },
-                                            child: Text(
-                                              'Precificar',
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(height: 10),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                            border: Border.all(
-                                              color: Colors.white,
-                                              width: 1.0,
-                                            ),
-                                          ),
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 10),
-                                          child: ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                              primary: Colors.transparent,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10.0),
-                                              ),
-                                            ),
-                                            onPressed: () {
                                               // Implementar ação de remover
-                                              Navigator.pop(context);
+                                              Navigator.pushNamed(context,
+                                                  '/receita/remover_receita');
                                             },
                                             child: Text(
                                               'Remover',
@@ -199,8 +186,7 @@ class _VisualizarReceitasState extends State<VisualizarReceitas> {
                                           color: Colors.white,
                                         ),
                                         onPressed: () {
-                                          Navigator.pushNamed(context,
-                                              '/receita/remover_receita');
+                                          Navigator.pop(context);
                                         },
                                       ),
                                     ],
@@ -234,6 +220,12 @@ class _VisualizarReceitasState extends State<VisualizarReceitas> {
                                       color: Colors.white,
                                     ),
                                   ),
+                                  Text(
+                                    'Preço Venda: ${precoVenda.toStringAsFixed(4)}',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  )
                                 ],
                               ),
                             ),

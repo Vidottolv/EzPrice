@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:ezprice/views/receita/EdicaoReceita.dart';
 
 import 'firebase_options.dart';
@@ -42,13 +40,15 @@ Future<void> main() async {
         '/ingrediente/visualizar': (context) => VisualizarIngredientes(),
         '/receita/cadastrar': (context) => CadastrarReceita(),
         '/receita/visualizar': (context) => VisualizarReceitas(),
-        '/receita/precificacao': (context) => const Precificar(),
+        '/receita/precificacao': (context) => const Precificar(
+              nome: '',
+            ),
         '/configuracao': (context) => const Configurar(),
         '/receita/EdicaoReceita': (context) => EdicaoReceita(
-              receitaNome: '',
+              nomeReceita: '',
             ),
         '/receita/remover_receita': (context) => RemoverReceitaScreen(
-              nome: '',
+              nomeReceita: '',
             ),
       },
     ),

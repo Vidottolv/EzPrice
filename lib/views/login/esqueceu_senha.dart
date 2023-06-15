@@ -1,5 +1,6 @@
 import 'package:ezprice/views/components/rounded_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../components/app_theme.dart';
 
@@ -7,6 +8,22 @@ class EsqueceuSenha extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
 
   EsqueceuSenha({Key? key}) : super(key: key);
+
+  void _enviarEmailTrocaSenha(BuildContext context) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(
+        email: emailController.text,
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('E-mail de troca de senha enviado')),
+      );
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erro ao enviar o e-mail de troca de senha')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +53,7 @@ class EsqueceuSenha extends StatelessWidget {
               SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
-                  // Adicione aqui a lógica para enviar o e-mail com o link de redefinição
+                  _enviarEmailTrocaSenha(context);
                 },
                 child: Text('Enviar e-mail'),
               ),

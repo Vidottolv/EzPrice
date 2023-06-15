@@ -1,73 +1,159 @@
-// ignore_for_file: prefer_const_constructors
-
-import 'package:ezprice/controller/login_controller.dart';
-import 'package:ezprice/views/components/rounded_text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:ezprice/views/components/app_theme.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Precificar extends StatefulWidget {
-  const Precificar({Key? key}) : super(key: key);
+  final String nome;
+
+  const Precificar({Key? key, required this.nome}) : super(key: key);
 
   @override
-  State<Precificar> createState() => _PrecificarState();
+  _PrecificarState createState() => _PrecificarState();
 }
 
 class _PrecificarState extends State<Precificar> {
-  final TextEditingController receitaController = TextEditingController();
-  final TextEditingController lucroController = TextEditingController();
-  final TextEditingController gasController = TextEditingController();
-  final TextEditingController ingredienteController = TextEditingController();
+  String? _nomeReceita;
+  Future<double>? _precoIdeal;
+  List<dynamic> _ingredientesList = [];
+  bool _mostrarIngredientes = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _nomeReceita = widget.nome;
+  }
+
+  Future<double> _calcularPrecoIdeal(BuildContext context) async {
+    try {
+      final QuerySnapshot<Map<String, dynamic>> snapshot =
+          await FirebaseFirestore.instance
+              .collection('receitas')
+              .where('nome', isEqualTo: _nomeReceita)
+              .get();
+
+      final List<DocumentSnapshot> documents = snapshot.docs;
+
+      if (documents.isNotEmpty) {
+        final DocumentSnapshot document = documents.first;
+
+        final Map<String, dynamic> receitaData =
+            document.data() as Map<String, dynamic>;
+
+        final List<dynamic> ingredientes = receitaData['ingredientes'];
+        final double gas = double.parse(receitaData['gas']);
+
+        double total = 0;
+
+        for (var ingrediente in ingredientes) {
+          final double precoIngrediente = double.parse(ingrediente['preco']);
+          final double quantidadeUsada =
+              double.parse(ingrediente['quantidade']);
+
+          total += (precoIngrediente * quantidadeUsada);
+        }
+
+        total += (1.10 * gas);
+
+        final double lucro = double.parse(receitaData['lucro']);
+        final double precoIdeal = total / (1 - lucro / 100);
+
+        setState(() {
+          _ingredientesList = ingredientes;
+        });
+
+        return precoIdeal;
+      }
+
+      return 0.0;
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erro ao calcular o preço ideal')),
+      );
+      return 0.0;
+    }
+  }
+
+  void _mostraIngredientes() {
+    setState(() {
+      _mostrarIngredientes = true;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    final formKey = GlobalKey<FormState>();
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Precificar Receita'),
-        ),
-        body: Container(
-          decoration: AppTheme.backgroundDecoration,
-          padding: const EdgeInsets.symmetric(horizontal: 40),
-          child: Center(
-            child: Form(
-              key: formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  SizedBox(height: 16),
-                  RoundedTextField(
-                      controller: receitaController,
-                      labelText: "Receita",
-                      hintText: "Qual é a receita?",
-                      icon: Icons.bookmark_rounded),
-                  SizedBox(height: 16),
-                  RoundedTextField(
-                      controller: lucroController,
-                      labelText: "Lucro",
-                      hintText: "Qual é o percentual de lucro?",
-                      icon: Icons.attach_money_rounded),
-                  SizedBox(height: 16),
-                  RoundedTextField(
-                      controller: gasController,
-                      labelText: "Horas de gás",
-                      hintText: "Informe em horas quanto gás é usado.",
-                      icon: Icons.av_timer_rounded),
-                  SizedBox(height: 16),
-                  RoundedTextField(
-                      controller: ingredienteController,
-                      labelText: "Ingrediente",
-                      hintText: "Insira o primeiro ingrediente.",
-                      icon: Icons.lock_rounded),
-                  SizedBox(height: 16),
-                  ElevatedButton(
-                      onPressed: () {},
-                      child: const Text('Mais ingredientes?')),
-                  ElevatedButton(
-                      onPressed: () {}, child: const Text('Cadastrar'))
-                ],
-              ),
-            ),
+      appBar: AppBar(
+        title: Text('Preço Ideal da Receita'),
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('images/gradMorpheu.png'),
+            fit: BoxFit.cover,
           ),
-        ));
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Vamos calcular o preço de venda desta receita?',
+                style: TextStyle(fontSize: 18),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    _precoIdeal = _calcularPrecoIdeal(context);
+                  });
+                },
+                child: Text('Calcular'),
+              ),
+              SizedBox(height: 16),
+              FutureBuilder<double>(
+                future: _precoIdeal,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Erro ao calcular o preço ideal');
+                  } else if (snapshot.hasData) {
+                    final precoIdeal = snapshot.data!;
+                    return Text(
+                      'Preço Ideal: $precoIdeal',
+                      style: TextStyle(fontSize: 18),
+                    );
+                  } else {
+                    return Container();
+                  }
+                },
+              ),
+              SizedBox(height: 16),
+              if (_mostrarIngredientes && _ingredientesList.isNotEmpty)
+                Column(
+                  children: [
+                    ElevatedButton(
+                      onPressed: () => _mostraIngredientes(),
+                      child: Text('Mostrar Ingredientes'),
+                    ),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: _ingredientesList.length,
+                      itemBuilder: (context, index) {
+                        final ingrediente = _ingredientesList[index];
+                        return ListTile(
+                          title: Text(ingrediente['nome']),
+                          subtitle:
+                              Text('Quantidade: ${ingrediente['quantidade']}'),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
