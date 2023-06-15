@@ -67,6 +67,54 @@ class _EdicaoReceitaState extends State<EdicaoReceita> {
     });
   }
 
+  Future<void> atualizarDadosReceita() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    final snapshot = await FirebaseFirestore.instance
+        .collection('receitas')
+        .where('nome', isEqualTo: widget.nomeReceita)
+        .limit(1)
+        .get();
+
+    if (snapshot.docs.isNotEmpty) {
+      final document = snapshot.docs.first;
+      final data = document.data();
+
+      data['nome'] = nomeReceita;
+      data['rendimentoReceita'] = rendimentoReceita;
+      data['lucro'] = lucroPercentual;
+      data['gas'] = gas;
+
+      final List<Map<String, dynamic>> ingredientes = [];
+
+      for (int i = 0; i < ingredientesList.length; i++) {
+        final ingrediente = ingredientesList[i]['ingrediente'];
+        final quantidade = ingredientesList[i]['quantidade'];
+        final preco = ingredientesList[i]['preco'];
+
+        ingredientes.add({
+          'ingrediente': ingrediente,
+          'quantidade': quantidade,
+          'preco': preco,
+        });
+      }
+
+      data['ingredientes'] = ingredientes;
+
+      await document.reference.update(data);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Dados da receita atualizados com sucesso!')),
+      );
+    }
+
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,17 +128,23 @@ class _EdicaoReceitaState extends State<EdicaoReceita> {
               (route) => false,
             );
           },
-          icon: Icon(Icons.home),
+          icon: const Icon(Icons.home),
         ),
+        actions: [
+          IconButton(
+            onPressed: atualizarDadosReceita,
+            icon: const Icon(Icons.save),
+          ),
+        ],
       ),
-      drawer: MenuDrawer(
+      drawer: const MenuDrawer(
         email: '',
         nome: '',
       ),
       body: isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('images/gradMorpheu.png'),
                   fit: BoxFit.cover,
@@ -105,36 +159,36 @@ class _EdicaoReceitaState extends State<EdicaoReceita> {
                     icon: Icons.local_cafe,
                     controller: TextEditingController(text: nomeReceita),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   RoundedTextField(
                     labelText: 'Rendimento da Receita',
                     hintText: '',
                     icon: Icons.shopping_basket,
                     controller: TextEditingController(text: rendimentoReceita),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   RoundedTextField(
                     labelText: 'Lucro Percentual',
                     hintText: '',
                     icon: Icons.monetization_on,
                     controller: TextEditingController(text: lucroPercentual),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   RoundedTextField(
                     labelText: 'Preço do Gás',
                     hintText: '',
                     icon: Icons.local_gas_station,
                     controller: TextEditingController(text: gas),
                   ),
-                  SizedBox(height: 20),
-                  Text(
+                  const SizedBox(height: 20),
+                  const Text(
                     'Ingredientes:',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   ListView.builder(
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     itemCount: ingredientesList.length,
                     itemBuilder: (context, index) {
                       final ingrediente =
@@ -143,8 +197,8 @@ class _EdicaoReceitaState extends State<EdicaoReceita> {
                       final preco = ingredientesList[index]['preco'];
 
                       return Container(
-                        margin: EdgeInsets.only(bottom: 10),
-                        padding: EdgeInsets.all(10),
+                        margin: const EdgeInsets.only(bottom: 10),
+                        padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
                           color: Colors.transparent,
                           borderRadius: BorderRadius.circular(10),
@@ -153,7 +207,7 @@ class _EdicaoReceitaState extends State<EdicaoReceita> {
                               color: Colors.grey.withOpacity(0.2),
                               spreadRadius: 2,
                               blurRadius: 5,
-                              offset: Offset(0, 3),
+                              offset: const Offset(0, 3),
                             ),
                           ],
                         ),
@@ -162,17 +216,17 @@ class _EdicaoReceitaState extends State<EdicaoReceita> {
                           children: [
                             Text(
                               'Ingrediente: $ingrediente',
-                              style: TextStyle(fontSize: 16),
+                              style: const TextStyle(fontSize: 16),
                             ),
-                            SizedBox(height: 5),
+                            const SizedBox(height: 5),
                             Text(
                               'Quantidade: $quantidade',
-                              style: TextStyle(fontSize: 16),
+                              style: const TextStyle(fontSize: 16),
                             ),
-                            SizedBox(height: 5),
+                            const SizedBox(height: 5),
                             Text(
                               'Preço Pago: $preco',
-                              style: TextStyle(fontSize: 16),
+                              style: const TextStyle(fontSize: 16),
                             ),
                           ],
                         ),
