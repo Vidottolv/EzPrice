@@ -1,4 +1,3 @@
-import 'package:ezprice/controller/receita_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -21,8 +20,7 @@ class RemoverReceitaScreen extends StatelessWidget {
       if (documents.isNotEmpty) {
         final DocumentSnapshot document = documents.first;
 
-        // Chame o método excluir da classe ReceitaController
-        ReceitaController().excluir(context, document.reference.id);
+        await document.reference.delete();
 
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Receita removida com sucesso')),

@@ -90,7 +90,7 @@ class _VisualizarReceitasState extends State<VisualizarReceitas> {
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return AlertDialog(
+                                  return Dialog(
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10.0),
                                       side: BorderSide(
@@ -98,98 +98,104 @@ class _VisualizarReceitasState extends State<VisualizarReceitas> {
                                         width: 1.0,
                                       ),
                                     ),
-                                    backgroundColor: Colors.transparent,
-                                    title: Text(
-                                      'Opções',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    content: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                            border: Border.all(
+                                    backgroundColor:
+                                        Colors.black87.withOpacity(0.8),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text(
+                                            'Opções',
+                                            style: TextStyle(
                                               color: Colors.white,
-                                              width: 1.0,
                                             ),
                                           ),
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 10),
-                                          child: ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                              primary: Colors.transparent,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10.0),
+                                          SizedBox(height: 16),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
+                                              border: Border.all(
+                                                color: Colors.white,
+                                                width: 1.0,
                                               ),
+                                            ),
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 10),
+                                            child: ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                primary: Colors.transparent,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0),
+                                                ),
+                                              ),
+                                              onPressed: () {
+                                                // Implementar ação de editar
+                                                Navigator.pushNamed(
+                                                  context,
+                                                  '/receita/EdicaoReceita',
+                                                  arguments:
+                                                      item, // Passando os dados da receita como argumento
+                                                );
+                                              },
+                                              child: Text(
+                                                'Editar',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(height: 10),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
+                                              border: Border.all(
+                                                color: Colors.white,
+                                                width: 1.0,
+                                              ),
+                                            ),
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 10),
+                                            child: ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                primary: Colors.transparent,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0),
+                                                ),
+                                              ),
+                                              onPressed: () {
+                                                // Implementar ação de remover
+                                                Navigator.pushNamed(context,
+                                                    '/receita/remover_receita');
+                                              },
+                                              child: Text(
+                                                'Remover',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(height: 16),
+                                          IconButton(
+                                            icon: Icon(
+                                              Icons.close,
+                                              color: Colors.white,
                                             ),
                                             onPressed: () {
-                                              // Implementar ação de editar
-                                              Navigator.pushNamed(
-                                                context,
-                                                '/receita/EdicaoReceita',
-                                                arguments:
-                                                    item, // Passando os dados da receita como argumento
-                                              );
+                                              Navigator.pop(context);
                                             },
-                                            child: Text(
-                                              'Editar',
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                              ),
-                                            ),
                                           ),
-                                        ),
-                                        SizedBox(height: 10),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                            border: Border.all(
-                                              color: Colors.white,
-                                              width: 1.0,
-                                            ),
-                                          ),
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 10),
-                                          child: ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                              primary: Colors.transparent,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10.0),
-                                              ),
-                                            ),
-                                            onPressed: () {
-                                              // Implementar ação de remover
-                                              Navigator.pushNamed(context,
-                                                  '/receita/remover_receita');
-                                            },
-                                            child: Text(
-                                              'Remover',
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    actions: [
-                                      IconButton(
-                                        icon: Icon(
-                                          Icons.close,
-                                          color: Colors.white,
-                                        ),
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
+                                        ],
                                       ),
-                                    ],
+                                    ),
                                   );
                                 },
                               );
