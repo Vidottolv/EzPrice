@@ -1,3 +1,7 @@
+import 'dart:js';
+
+import 'package:ezprice/views/receita/EdicaoReceita.dart';
+
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +17,11 @@ import 'package:ezprice/views/ingrediente/visualizar_ingredientes.dart';
 import 'package:ezprice/views/receita/cadastrar_receita.dart';
 import 'package:ezprice/views/receita/visualizar_receitas.dart';
 import 'package:ezprice/views/receita/precificacao.dart';
+import 'package:ezprice/views/configuracao.dart';
+import 'package:ezprice/views/receita/remover_receita.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -36,6 +43,13 @@ Future<void> main() async {
         '/receita/cadastrar': (context) => CadastrarReceita(),
         '/receita/visualizar': (context) => VisualizarReceitas(),
         '/receita/precificacao': (context) => const Precificar(),
+        '/configuracao': (context) => const Configurar(),
+        '/receita/EdicaoReceita': (context) => EdicaoReceita(
+              receitaNome: '',
+            ),
+        '/receita/remover_receita': (context) => RemoverReceitaScreen(
+              nome: '',
+            ),
       },
     ),
   );

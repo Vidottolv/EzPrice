@@ -1,60 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:ezprice/views/ingrediente/ingrediente.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ezprice/views/components/app_theme.dart';
 import 'package:ezprice/views/components/menu_drawer.dart';
 
 class VisualizarIngredientes extends StatelessWidget {
-  final List<Ingrediente> ingredientes = [
-    Ingrediente(
-      nome: 'Farinha de Trigo',
-      quantidade: 1.0,
-      unidadeMedida: 'Kg',
-      preco: 7.00,
-    ),
-    Ingrediente(
-      nome: 'Ovo',
-      quantidade: 12.0,
-      unidadeMedida: 'Unidade',
-      preco: 15.00,
-    ),
-    Ingrediente(
-      nome: 'Leite',
-      quantidade: 1.0,
-      unidadeMedida: 'L',
-      preco: 5.50,
-    ),
-    Ingrediente(
-      nome: 'Açúcar Cristal',
-      quantidade: 1.0,
-      unidadeMedida: 'Kg',
-      preco: 4.00,
-    ),
-    Ingrediente(
-      nome: 'Manteiga',
-      quantidade: 1.0,
-      unidadeMedida: 'Kg',
-      preco: 17.00,
-    ),
-    Ingrediente(
-      nome: 'Chocolate',
-      quantidade: 1.0,
-      unidadeMedida: 'Kg',
-      preco: 36.00,
-    ),
-    Ingrediente(
-      nome: 'Café',
-      quantidade: 1.0,
-      unidadeMedida: 'Kg',
-      preco: 30.00,
-    ),
-    Ingrediente(
-      nome: 'Canela',
-      quantidade: 1.0,
-      unidadeMedida: 'Kg',
-      preco: 34.80,
-    ),
-  ];
-
   VisualizarIngredientes({Key? key}) : super(key: key);
 
   int _calculateCrossAxisCount(BuildContext context) {
@@ -89,32 +38,53 @@ class VisualizarIngredientes extends StatelessWidget {
       body: Container(
         decoration: AppTheme.backgroundDecoration,
         padding: const EdgeInsets.symmetric(horizontal: 40),
-        child: GridView.builder(
-          itemCount: ingredientes.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: _calculateCrossAxisCount(context),
-            crossAxisSpacing: 8.0,
-            mainAxisSpacing: 8.0,
-          ),
-          itemBuilder: (context, index) {
-            return Card(
-              color: Colors.transparent,
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-                side: BorderSide(color: Colors.white, width: 1),
+        child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+          stream: FirebaseFirestore.instance.collection('receitas').snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            }
+
+            if (!snapshot.hasData) {
+              return Center(child: Text('No Data'));
+            }
+
+            final receitas = snapshot.data!.docs;
+
+            // Obter todos os ingredientes distintos
+            final ingredientes = <String>{};
+            for (final receita in receitas) {
+              final ingredientesReceita =
+                  Set<String>.from(receita['ingredientes'] ?? []);
+              ingredientes.addAll(ingredientesReceita);
+            }
+
+            return GridView.builder(
+              itemCount: ingredientes.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: _calculateCrossAxisCount(context),
+                crossAxisSpacing: 8.0,
+                mainAxisSpacing: 8.0,
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(ingredientes[index].nome),
-                  Text(
-                      'Qnt: ${ingredientes[index].quantidade} ${ingredientes[index].unidadeMedida}'),
-                  Text(
-                      'Preço: R\$ ${ingredientes[index].preco.toStringAsFixed(2)}'),
-                ],
-              ),
+              itemBuilder: (context, index) {
+                final ingrediente = ingredientes.elementAt(index);
+
+                return Card(
+                  color: Colors.transparent,
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    side: BorderSide(color: Colors.white, width: 1),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(ingrediente),
+                    ],
+                  ),
+                );
+              },
             );
           },
         ),

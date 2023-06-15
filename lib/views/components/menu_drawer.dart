@@ -64,7 +64,9 @@ class _MenuDrawerState extends State<MenuDrawer> {
             title: const Text("Configurações"),
             tileColor: Colors.black.withOpacity(0.6),
             leading: const Icon(Icons.settings, color: Colors.white),
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, '/configuracao');
+            },
           ),
           ListTile(
             title: const Text("Menu"),

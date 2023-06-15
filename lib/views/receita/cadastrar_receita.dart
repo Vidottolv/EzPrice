@@ -1,6 +1,5 @@
-// ignore_for_file: non_constant_identifier_names, prefer_const_constructors
-
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:ezprice/views/components/menu_drawer.dart';
 import 'package:ezprice/views/components/app_theme.dart';
 import 'package:ezprice/views/components/rounded_text_field.dart';
@@ -26,6 +25,8 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
   void dispose() {
     receitaCont.dispose();
     rendimentoReceitaCont.dispose();
+    lucroCont.dispose();
+    gasCont.dispose();
     for (var controller in ingredContList) {
       controller.dispose();
     }
@@ -41,6 +42,7 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
   void _cadastrarReceita(BuildContext context) {
     final String receita = receitaCont.text;
     final String rendimentoReceita = rendimentoReceitaCont.text;
+    final String lucro = lucroCont.text;
 
     List<Map<String, dynamic>> ingredientes = [];
     for (int i = 0; i < ingredContList.length; i++) {
@@ -61,6 +63,7 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
       FirebaseFirestore.instance.collection('receitas').add({
         'nome': receita,
         'rendimentoReceita': rendimentoReceita,
+        'lucro': lucro, // Adicione o campo 'lucro' ao documento sendo salvo
         'ingredientes': ingredientes,
       }).then((value) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -68,6 +71,8 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
         );
         receitaCont.clear();
         rendimentoReceitaCont.clear();
+        lucroCont.clear();
+        gasCont.clear();
         for (var controller in ingredContList) {
           controller.clear();
         }
@@ -100,7 +105,19 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Cadastrar Receita"),
+        title: const Text("EzPrice"),
+        actions: [
+          Tooltip(
+            message: 'Retornar ao menu',
+            child: IconButton(
+              onPressed: () {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, '/home', (route) => false);
+              },
+              icon: Icon(Icons.home),
+            ),
+          ),
+        ],
       ),
       drawer: MenuDrawer(
         nome: nomeUsuario,
@@ -108,8 +125,8 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
       ),
       body: Container(
         decoration: AppTheme.backgroundDecoration,
-        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
-        child: Column(
+        child: ListView(
+          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
           children: [
             RoundedTextField(
               labelText: 'Receita',

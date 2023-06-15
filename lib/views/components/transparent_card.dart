@@ -1,3 +1,4 @@
+import 'package:ezprice/views/components/rounded_text_field.dart';
 import 'package:flutter/material.dart';
 
 class TransparentCard extends StatelessWidget {
