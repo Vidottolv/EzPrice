@@ -49,24 +49,24 @@ class _HomeState extends State<Home> {
                   children: [
                     SizedBox(height: 16),
                     TransparentCard(
-                      title: "Consultar Receitas",
+                      title: "Minhas Receitas",
                       text:
-                          "Consulte as receitas cadastradas no sistema, e veja o valor de cada uma delas.",
+                          "Consulte as receitas cadastradas no sistema, veja o valor de cada uma delas e adicione novas receitas no ícone '+'.",
                       buttonText: "Consultar",
                       onPressed: () {
                         Navigator.pushNamed(context, '/receita/visualizar');
                       },
                     ),
-                    SizedBox(height: 16),
-                    TransparentCard(
-                      title: "Consultar Ingredientes",
-                      text:
-                          "Consulte os ingredientes cadastrados no sistema, e veja o valor de cada um deles.",
-                      buttonText: "Consultar",
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/ingrediente/visualizar');
-                      },
-                    ),
+                    // SizedBox(height: 16),
+                    // TransparentCard(
+                    //   title: "Consultar Ingredientes",
+                    //   text:
+                    //       "Consulte os ingredientes cadastrados no sistema, e veja o valor de cada um deles.",
+                    //   buttonText: "Consultar",
+                    //   onPressed: () {
+                    //     Navigator.pushNamed(context, '/ingrediente/visualizar');
+                    //   },
+                    // ),
                   ],
                 ),
               ),

@@ -45,10 +45,10 @@ Future<void> main() async {
             ),
         '/configuracao': (context) => const Configurar(),
         '/receita/EdicaoReceita': (context) => EdicaoReceita(
-              nomeReceita: '',
+              idReceita: '',
             ),
-        '/receita/remover_receita': (context) => RemoverReceitaScreen(
-              nomeReceita: '',
+        '/receita/remover_receita': (context) => RemoverReceita(
+              idReceita: '',
             ),
       },
     ),

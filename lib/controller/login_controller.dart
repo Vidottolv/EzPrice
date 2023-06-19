@@ -41,6 +41,20 @@ class LoginController {
     });
   }
 
+  Future<String> loggedUser() async {
+    var user = '';
+    await FirebaseFirestore.instance
+        .collection('usuarios')
+        .where('uid', isEqualTo: getUserId())
+        .get()
+        .then(
+      (result) {
+        user = result.docs[0].data()['nome'] ?? '';
+      },
+    );
+    return user;
+  }
+
   //
   // LOGIN
   // Efetuar o login de um usuário previamente cadastrado
@@ -84,6 +98,10 @@ class LoginController {
       erro(context, 'Informe o email para recuperar a conta.');
     }
     Navigator.pop(context);
+  }
+
+  getUserId() {
+    return FirebaseAuth.instance.currentUser!.uid;
   }
 
   //

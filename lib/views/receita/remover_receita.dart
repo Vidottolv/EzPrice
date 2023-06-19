@@ -1,39 +1,15 @@
+import 'dart:js';
+
+import 'package:ezprice/controller/receita_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
-class RemoverReceitaScreen extends StatelessWidget {
-  final String nomeReceita;
+class RemoverReceita extends StatelessWidget {
+  final String idReceita;
 
-  const RemoverReceitaScreen({Key? key, required this.nomeReceita})
-      : super(key: key);
+  const RemoverReceita({Key? key, required this.idReceita}) : super(key: key);
 
-  Future<void> _removerReceita(BuildContext context) async {
-    try {
-      final QuerySnapshot<Map<String, dynamic>> snapshot =
-          await FirebaseFirestore.instance
-              .collection('receitas')
-              .where('nome', isEqualTo: nomeReceita)
-              .get();
-
-      final List<DocumentSnapshot> documents = snapshot.docs;
-
-      if (documents.isNotEmpty) {
-        final DocumentSnapshot document = documents.first;
-
-        await document.reference.delete();
-
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Receita removida com sucesso')),
-        );
-
-        // Navegar de volta para a tela anterior
-        Navigator.pop(context);
-      }
-    } catch (error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Erro ao remover a receita')),
-      );
-    }
+  void _removerReceita() {
+    ReceitaController().excluir(context, idReceita);
   }
 
   @override
@@ -60,7 +36,7 @@ class RemoverReceitaScreen extends StatelessWidget {
               ),
               SizedBox(height: 16),
               ElevatedButton(
-                onPressed: () => _removerReceita(context),
+                onPressed: _removerReceita,
                 child: Text('Remover'),
                 style: ElevatedButton.styleFrom(
                   primary: Colors.red,

@@ -1,118 +1,53 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ezprice/model/model_receita.dart';
 import 'package:ezprice/views/components/menu_drawer.dart';
 import 'package:ezprice/views/components/rounded_text_field.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
+
+import '../../controller/login_controller.dart';
+import '../../controller/receita_controller.dart';
+import '../../model/ingrediente.dart';
 
 class EdicaoReceita extends StatefulWidget {
-  final String nomeReceita;
+  final String idReceita;
 
-  EdicaoReceita({required this.nomeReceita});
+  EdicaoReceita({required this.idReceita});
 
   @override
-  State<EdicaoReceita> createState() => _EdicaoReceitaState();
+  State<EdicaoReceita> createState() =>
+      _EdicaoReceitaState(idReceita: idReceita);
 }
 
 class _EdicaoReceitaState extends State<EdicaoReceita> {
-  final List<Map<String, String>> ingredientesList = [];
+  final String idReceita;
+  final List<Ingrediente> ingredientesList = [];
 
   bool isLoading = false;
   String nomeReceita = '';
-  String rendimentoReceita = '';
+  String rendimento = '';
   String lucroPercentual = '';
   String gas = '';
+  String precoVenda = '';
 
-  @override
-  void initState() {
-    super.initState();
-    _loadReceitaData();
-  }
+  final String uid = FirebaseAuth.instance.currentUser!.uid;
 
-  Future<void> _loadReceitaData() async {
-    setState(() {
-      isLoading = true;
-    });
+  _EdicaoReceitaState({required this.idReceita});
 
-    final snapshot = await FirebaseFirestore.instance
-        .collection('receitas')
-        .where('nome', isEqualTo: widget.nomeReceita)
-        .limit(1)
-        .get();
+  void atualizar() {
+    var uuid = Uuid();
 
-    if (snapshot.docs.isNotEmpty) {
-      final document = snapshot.docs.first;
-      final data = document.data();
-
-      nomeReceita = data['nome'] ?? '';
-      rendimentoReceita = data['rendimentoReceita'] ?? '';
-      lucroPercentual = data['lucro'] ?? '';
-      gas = data['gas'] ?? '';
-
-      final List<dynamic> ingredientes = data['ingredientes'] ?? [];
-
-      for (int i = 0; i < ingredientes.length; i++) {
-        final ingrediente = ingredientes[i]['ingrediente'] ?? '';
-        final quantidade = ingredientes[i]['quantidade'] ?? '';
-        final preco = ingredientes[i]['preco'] ?? '';
-
-        ingredientesList.add({
-          'ingrediente': ingrediente,
-          'quantidade': quantidade,
-          'preco': preco,
-        });
-      }
-    }
-
-    setState(() {
-      isLoading = false;
-    });
-  }
-
-  Future<void> atualizarDadosReceita() async {
-    setState(() {
-      isLoading = true;
-    });
-
-    final snapshot = await FirebaseFirestore.instance
-        .collection('receitas')
-        .where('nome', isEqualTo: widget.nomeReceita)
-        .limit(1)
-        .get();
-
-    if (snapshot.docs.isNotEmpty) {
-      final document = snapshot.docs.first;
-      final data = document.data();
-
-      data['nome'] = nomeReceita;
-      data['rendimentoReceita'] = rendimentoReceita;
-      data['lucro'] = lucroPercentual;
-      data['gas'] = gas;
-
-      final List<Map<String, dynamic>> ingredientes = [];
-
-      for (int i = 0; i < ingredientesList.length; i++) {
-        final ingrediente = ingredientesList[i]['ingrediente'];
-        final quantidade = ingredientesList[i]['quantidade'];
-        final preco = ingredientesList[i]['preco'];
-
-        ingredientes.add({
-          'ingrediente': ingrediente,
-          'quantidade': quantidade,
-          'preco': preco,
-        });
-      }
-
-      data['ingredientes'] = ingredientes;
-
-      await document.reference.update(data);
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Dados da receita atualizados com sucesso!')),
-      );
-    }
-
-    setState(() {
-      isLoading = false;
-    });
+    ReceitaCadastro receitaA = ReceitaCadastro(
+        nomeReceita,
+        double.parse(gas),
+        rendimento,
+        uid,
+        double.parse(lucroPercentual),
+        ingredientesList,
+        double.parse(precoVenda),
+        uuid.v4());
+    ReceitaController().atualizar(context, idReceita, receitaA);
   }
 
   @override
@@ -132,7 +67,7 @@ class _EdicaoReceitaState extends State<EdicaoReceita> {
         ),
         actions: [
           IconButton(
-            onPressed: atualizarDadosReceita,
+            onPressed: atualizar,
             icon: const Icon(Icons.save),
           ),
         ],
@@ -164,7 +99,7 @@ class _EdicaoReceitaState extends State<EdicaoReceita> {
                     labelText: 'Rendimento da Receita',
                     hintText: '',
                     icon: Icons.shopping_basket,
-                    controller: TextEditingController(text: rendimentoReceita),
+                    controller: TextEditingController(text: rendimento),
                   ),
                   const SizedBox(height: 10),
                   RoundedTextField(
@@ -180,59 +115,107 @@ class _EdicaoReceitaState extends State<EdicaoReceita> {
                     icon: Icons.local_gas_station,
                     controller: TextEditingController(text: gas),
                   ),
+                  const SizedBox(height: 10),
+                  RoundedTextField(
+                    labelText: 'Preço de Venda',
+                    hintText: '',
+                    icon: Icons.attach_money,
+                    controller: TextEditingController(text: precoVenda),
+                  ),
                   const SizedBox(height: 20),
                   const Text(
                     'Ingredientes:',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 10),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: ingredientesList.length,
-                    itemBuilder: (context, index) {
-                      final ingrediente =
-                          ingredientesList[index]['ingrediente'];
-                      final quantidade = ingredientesList[index]['quantidade'];
-                      final preco = ingredientesList[index]['preco'];
+                  // FutureBuilder<List<ReceitaCadastro>>(
+                  //     future: ReceitaController().listReceita(context),
+                  //     builder: (context, snapshot) {
+                  //       if (snapshot.connectionState == ConnectionState.none ||
+                  //           snapshot.connectionState ==
+                  //               ConnectionState.waiting ||
+                  //           snapshot.data!.isEmpty) {
+                  //         return const Center(
+                  //           child: Text(
+                  //             'Você ainda não possui receitas.',
+                  //             style: TextStyle(
+                  //                 fontWeight: FontWeight.bold, fontSize: 18),
+                  //           ),
+                  //         );
+                  //       } else {
+                  //         return Expanded(
+                  //           child: ListView.builder(
+                  //             padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  //             itemCount: snapshot.data!.length,
+                  //             itemBuilder: (context, index) {
+                  //               ReceitaCadastro receita = snapshot.data![index];
+                  //               return SizedBox(
+                  //                 width:
+                  //                     MediaQuery.of(context).size.width * 0.5,
+                  //                 child: Card(
+                  //                   shape: RoundedRectangleBorder(
+                  //                     borderRadius: BorderRadius.circular(15.0),
+                  //                   ),
+                  //                   borderOnForeground: true,
+                  //                   elevation: 8,
+                  //                   child: ListTile(
+                  //                     trailing: Row(
+                  //                       mainAxisSize: MainAxisSize.min,
+                  //                       children: [
+                  //                         IconButton(
+                  //                           icon: const Icon(Icons.edit,
+                  //                               color: Colors.black),
+                  //                           onPressed: () {},
+                  //                         ),
+                  //                         const SizedBox(width: 8),
+                  //                         IconButton(
+                  //                             icon: const Icon(Icons.delete,
+                  //                                 color: Colors.red),
+                  //                             onPressed: () {}),
+                  //                       ],
+                  //                     ),
+                  //                     onTap: () {
+                  //                       // Navigator.push(
+                  //                       //   context,
+                  //                       //   MaterialPageRoute(
+                  //                       //     builder: (context) =>
+                  //                       //         CalculationDetailsPage(
+                  //                       //             calculation:
+                  //                       //                 snapshot.data![index]),
+                  //                       //   ),
+                  //                       // );
+                  //                     },
+                  //                     title: FutureBuilder<String>(
+                  //                         future:
+                  //                             LoginController().loggedUser(),
+                  //                         builder: (context, snapshot) {
+                  //                           if (snapshot.connectionState ==
+                  //                               ConnectionState.done) {
+                  //                             return Text(receita.nomeReceita,
+                  //                                 style: const TextStyle(
+                  //                                     fontWeight:
+                  //                                         FontWeight.bold));
+                  //                           }
 
-                      return Container(
-                        margin: const EdgeInsets.only(bottom: 10),
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.2),
-                              spreadRadius: 2,
-                              blurRadius: 5,
-                              offset: const Offset(0, 3),
-                            ),
-                          ],
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Ingrediente: $ingrediente',
-                              style: const TextStyle(fontSize: 16),
-                            ),
-                            const SizedBox(height: 5),
-                            Text(
-                              'Quantidade: $quantidade',
-                              style: const TextStyle(fontSize: 16),
-                            ),
-                            const SizedBox(height: 5),
-                            Text(
-                              'Preço Pago: $preco',
-                              style: const TextStyle(fontSize: 16),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
+                  //                           return const Text(
+                  //                             'Cálculo inválido',
+                  //                             style: TextStyle(
+                  //                                 fontWeight: FontWeight.bold),
+                  //                           );
+                  //                         }),
+                  //                     subtitle: Text(
+                  //                       receita.nomeReceita,
+                  //                       style: const TextStyle(
+                  //                           color: Color(0xffFFA123)),
+                  //                     ),
+                  //                   ),
+                  //                 ),
+                  //               );
+                  //             },
+                  //           ),
+                  //         );
+                  //       }
+                  //     })
                 ],
               ),
             ),

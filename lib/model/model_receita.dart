@@ -1,34 +1,36 @@
+import 'package:ezprice/model/ingrediente.dart';
+
 class ReceitaCadastro {
   final String nomeReceita;
-  final String ingrediente;
-  final double preco;
-  final double quantidade;
+  final List<Ingrediente> ingrediente;
   final double tempoDeGas;
+  final String rendimento;
   final String uid;
   final double lucro;
   final double precoVenda;
+  final String idReceita;
 
   ReceitaCadastro(
     this.nomeReceita,
     this.tempoDeGas,
+    this.rendimento,
     this.uid,
     this.lucro,
     this.ingrediente,
-    this.preco,
-    this.quantidade,
     this.precoVenda,
+    this.idReceita,
   );
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'nomeReceita': nomeReceita,
       'tempoDeGas': tempoDeGas,
+      'rendimento': rendimento,
       'uid': uid,
       'lucro': lucro,
-      'ingrediente': ingrediente,
-      'preco': preco,
-      'quantidade': quantidade,
+      'ingrediente': ingrediente.map((ingred) => ingred.toJson()).toList(),
       'precoVenda': precoVenda,
+      'idReceita': idReceita,
     };
   }
 
@@ -36,12 +38,14 @@ class ReceitaCadastro {
     return ReceitaCadastro(
       json['nomeReceita'],
       json['tempoDeGas'],
+      json['rendimento'],
       json['uid'],
       json['lucro'],
-      json['ingrediente'],
-      json['preco'],
-      json['quantidade'],
+      (json['ingrediente'] as List<dynamic>)
+          .map((ingredJson) => Ingrediente.fromJson(ingredJson))
+          .toList(),
       json['precoVenda'],
+      json['idReceita'],
     );
   }
 }

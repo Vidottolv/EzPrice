@@ -36,22 +36,22 @@ class _MenuDrawerState extends State<MenuDrawer> {
               Navigator.pushNamed(context, '/receita/visualizar');
             },
           ),
-          ListTile(
-            title: const Text("Consultar Ingredientes"),
-            tileColor: Colors.black.withOpacity(0.6),
-            leading: const Icon(Icons.list, color: Colors.white),
-            onTap: () {
-              Navigator.pushNamed(context, '/ingrediente/visualizar');
-            },
-          ),
-          ListTile(
-            title: const Text("Precificação"),
-            tileColor: Colors.black.withOpacity(0.6),
-            leading: const Icon(Icons.list, color: Colors.white),
-            onTap: () {
-              Navigator.pushNamed(context, '/receita/precificacao');
-            },
-          ),
+          // ListTile(
+          // title: const Text("Consultar Ingredientes"),
+          // tileColor: Colors.black.withOpacity(0.6),
+          // leading: const Icon(Icons.list, color: Colors.white),
+          // onTap: () {
+          // Navigator.pushNamed(context, '/ingrediente/visualizar');
+          // },
+          // // ),
+          // ListTile(
+          // // title: const Text("Precificação"),
+          // // tileColor: Colors.black.withOpacity(0.6),
+          // // leading: const Icon(Icons.list, color: Colors.white),
+          // // onTap: () {
+          // //   Navigator.pushNamed(context, '/receita/precificacao');
+          //   // },
+          // // ),
           ListTile(
             title: const Text("Sobre o EzPrice"),
             tileColor: Colors.black.withOpacity(0.6),

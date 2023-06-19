@@ -12,6 +12,8 @@ class VisualizarReceitas extends StatefulWidget {
 
 class _VisualizarReceitasState extends State<VisualizarReceitas> {
   late String uidUsuarioLogado;
+  String selectedReceitaId =
+      ''; // Variável para armazenar o idReceita selecionado
 
   @override
   void initState() {
@@ -68,11 +70,15 @@ class _VisualizarReceitasState extends State<VisualizarReceitas> {
                         snapshot.data!.docs.map((DocumentSnapshot document) {
                       Map<String, dynamic> item =
                           document.data()! as Map<String, dynamic>;
-                      String nomeReceita = item['nome'] ?? '';
+                      String nomeReceita = item['nomeReceita'] ?? '';
                       String rendimentoReceita =
-                          item['rendimentoReceita'].toString() ?? '';
+                          item['rendimento'].toString() ?? '';
                       String lucroPercentual = item['lucro'].toString() ?? '';
                       double precoVenda = item['precoVenda'] ?? 0.0;
+
+                      // Armazenar o idReceita selecionado
+                      final idReceita = document.id;
+
                       return Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 40, vertical: 16),
@@ -133,12 +139,11 @@ class _VisualizarReceitasState extends State<VisualizarReceitas> {
                                                 ),
                                               ),
                                               onPressed: () {
-                                                // Implementar ação de editar
+                                                // Passar o idReceita para a função de editar
                                                 Navigator.pushNamed(
                                                   context,
                                                   '/receita/EdicaoReceita',
-                                                  arguments:
-                                                      item, // Passando os dados da receita como argumento
+                                                  arguments: idReceita,
                                                 );
                                               },
                                               child: Text(
@@ -171,9 +176,10 @@ class _VisualizarReceitasState extends State<VisualizarReceitas> {
                                                 ),
                                               ),
                                               onPressed: () {
-                                                // Implementar ação de remover
+                                                // Passar o idReceita para a função de remover
                                                 Navigator.pushNamed(context,
-                                                    '/receita/remover_receita');
+                                                    '/receita/remover_receita',
+                                                    arguments: idReceita);
                                               },
                                               child: Text(
                                                 'Remover',

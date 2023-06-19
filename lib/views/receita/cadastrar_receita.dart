@@ -1,3 +1,6 @@
+import 'package:ezprice/controller/receita_controller.dart';
+import 'package:ezprice/model/ingrediente.dart';
+import 'package:ezprice/model/model_receita.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:ezprice/views/components/menu_drawer.dart';
@@ -5,6 +8,7 @@ import 'package:ezprice/views/components/app_theme.dart';
 import 'package:ezprice/views/components/rounded_text_field.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:uuid/uuid.dart';
 
 class CadastrarReceita extends StatefulWidget {
   CadastrarReceita({Key? key}) : super(key: key);
@@ -15,7 +19,7 @@ class CadastrarReceita extends StatefulWidget {
 
 class _CadastrarReceitaState extends State<CadastrarReceita> {
   final TextEditingController receitaCont = TextEditingController();
-  final TextEditingController rendimentoReceitaCont = TextEditingController();
+  final TextEditingController rendimento = TextEditingController();
   final TextEditingController lucroCont = TextEditingController();
   final TextEditingController gasCont = TextEditingController();
   List<TextEditingController> ingredContList = [];
@@ -25,7 +29,7 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
   @override
   void dispose() {
     receitaCont.dispose();
-    rendimentoReceitaCont.dispose();
+    rendimento.dispose();
     lucroCont.dispose();
     gasCont.dispose();
     for (var controller in ingredContList) {
@@ -41,13 +45,13 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
   }
 
   void _cadastrarReceita(BuildContext context) async {
-    final String receita = receitaCont.text;
-    final String rendimentoReceita = rendimentoReceitaCont.text;
+    final String nomeReceita = receitaCont.text;
+    final String rendimentoReceita = rendimento.text;
     final String lucro = lucroCont.text;
     final String gas = gasCont.text;
     final String uid = FirebaseAuth.instance.currentUser!.uid;
 
-    List<Map<String, dynamic>> ingredientes = [];
+    List<Ingrediente> ingredientes = [];
     double precoVenda = 0.0;
 
     for (int i = 0; i < ingredContList.length; i++) {
@@ -56,53 +60,51 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
       final String precoIngred = precoIngredContList[i].text;
 
       if (ingred.isNotEmpty && QTDIngred.isNotEmpty && precoIngred.isNotEmpty) {
-        double precoIngrediente = double.parse(precoIngred);
-        double quantidade = double.parse(QTDIngred);
+        int precoIngrediente = int.parse(precoIngred);
+        int quantidade = int.parse(QTDIngred);
 
-        ingredientes.add({
-          'nome': ingred,
-          'quantidade': quantidade,
-          'preco': precoIngrediente,
-        });
+        Ingrediente ingrediente = Ingrediente(
+          ingred,
+          quantidade,
+          precoIngrediente,
+        );
+
+        ingredientes.add(ingrediente);
 
         precoVenda += precoIngrediente * quantidade;
       }
     }
 
-    if (receita.isNotEmpty && ingredientes.isNotEmpty) {
+    if (nomeReceita.isNotEmpty && ingredientes.isNotEmpty) {
       double tempoGas = double.parse(gas);
       precoVenda +=
           (1.10 * tempoGas) + (precoVenda * double.parse(lucro) / 100);
 
-      FirebaseFirestore.instance.collection('receitas').add({
-        'nome': receita,
-        'rendimentoReceita': rendimentoReceita,
-        'lucro': double.parse(lucro),
-        'precoVenda': precoVenda,
-        'ingredientes': ingredientes,
-        'uid': uid,
-      }).then((value) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Receita cadastrada com sucesso!')),
-        );
-        receitaCont.clear();
-        rendimentoReceitaCont.clear();
-        lucroCont.clear();
-        gasCont.clear();
-        for (var controller in ingredContList) {
-          controller.clear();
-        }
-        for (var controller in QTDIngredContList) {
-          controller.clear();
-        }
-        for (var controller in precoIngredContList) {
-          controller.clear();
-        }
-      }).catchError((error) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Erro ao cadastrar a receita.')),
-        );
-      });
+      var uuid = Uuid();
+
+      ReceitaCadastro receitaN = ReceitaCadastro(
+          nomeReceita,
+          double.parse(gas),
+          rendimentoReceita,
+          uid,
+          double.parse(lucro),
+          ingredientes,
+          precoVenda,
+          uuid.v4());
+      ReceitaController().adicionar(context, receitaN);
+      receitaCont.clear();
+      rendimento.clear();
+      lucroCont.clear();
+      gasCont.clear();
+      for (var controller in ingredContList) {
+        controller.clear();
+      }
+      for (var controller in QTDIngredContList) {
+        controller.clear();
+      }
+      for (var controller in precoIngredContList) {
+        controller.clear();
+      }
     }
   }
 
@@ -154,7 +156,7 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
             RoundedTextField(
               labelText: 'Rendimento',
               hintText: 'Digite qual o rendimento da Receita',
-              controller: rendimentoReceitaCont,
+              controller: rendimento,
               icon: Icons.local_dining_rounded,
             ),
             SizedBox(height: 10),

@@ -102,14 +102,14 @@ class _ConfigurarState extends State<Configurar> {
                 children: [
                   RoundedTextField(
                     labelText: 'Nome',
-                    hintText: 'Digite o nome a alterar',
+                    hintText: 'Digite seu nome',
                     controller: nomeCont,
                     icon: Icons.person_rounded,
                   ),
                   SizedBox(height: 10),
                   RoundedTextField(
                     labelText: 'Email',
-                    hintText: 'Digite o Email a alterar',
+                    hintText: 'Digite seu Email',
                     controller: emailCont,
                     icon: Icons.email_rounded,
                   ),
