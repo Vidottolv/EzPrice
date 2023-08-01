@@ -71,9 +71,8 @@ class _VisualizarReceitasState extends State<VisualizarReceitas> {
                       Map<String, dynamic> item =
                           document.data()! as Map<String, dynamic>;
                       String nomeReceita = item['nomeReceita'] ?? '';
-                      String rendimentoReceita =
-                          item['rendimento'].toString() ?? '';
-                      String lucroPercentual = item['lucro'].toString() ?? '';
+                      String rendimentoReceita = item['rendimento'].toString();
+                      String lucroPercentual = item['lucro'].toString();
                       double precoVenda = item['precoVenda'] ?? 0.0;
 
                       // Armazenar o idReceita selecionado
@@ -208,13 +207,16 @@ class _VisualizarReceitasState extends State<VisualizarReceitas> {
                             },
                             child: ListTile(
                               leading: Icon(
-                                Icons.description,
+                                Icons.menu_book_rounded,
                                 color: Colors.white,
                               ),
-                              title: Text(
-                                nomeReceita,
-                                style: TextStyle(
-                                  color: Colors.white,
+                              title: Align(
+                                alignment: Alignment.topLeft,
+                                child: Text(
+                                  nomeReceita,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                               subtitle: Column(
@@ -233,7 +235,7 @@ class _VisualizarReceitasState extends State<VisualizarReceitas> {
                                     ),
                                   ),
                                   Text(
-                                    'Preço Venda: ${precoVenda.toStringAsFixed(4)}',
+                                    'Preço Venda: ${precoVenda.toStringAsFixed(3)}',
                                     style: TextStyle(
                                       color: Colors.white,
                                     ),

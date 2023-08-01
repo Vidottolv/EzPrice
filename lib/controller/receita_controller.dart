@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ezprice/views/receita/receita.dart';
 import 'package:flutter/material.dart';
 import 'package:ezprice/model/model_receita.dart';
 import 'package:ezprice/views/util.dart';

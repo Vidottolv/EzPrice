@@ -6,7 +6,6 @@ import 'package:flutter/rendering.dart';
 import 'package:ezprice/views/components/menu_drawer.dart';
 import 'package:ezprice/views/components/app_theme.dart';
 import 'package:ezprice/views/components/rounded_text_field.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:uuid/uuid.dart';
 
@@ -23,7 +22,7 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
   final TextEditingController lucroCont = TextEditingController();
   final TextEditingController gasCont = TextEditingController();
   List<TextEditingController> ingredContList = [];
-  List<TextEditingController> QTDIngredContList = [];
+  List<TextEditingController> qtdIngredContList = [];
   List<TextEditingController> precoIngredContList = [];
 
   @override
@@ -35,7 +34,7 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
     for (var controller in ingredContList) {
       controller.dispose();
     }
-    for (var controller in QTDIngredContList) {
+    for (var controller in qtdIngredContList) {
       controller.dispose();
     }
     for (var controller in precoIngredContList) {
@@ -56,12 +55,12 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
 
     for (int i = 0; i < ingredContList.length; i++) {
       final String ingred = ingredContList[i].text;
-      final String QTDIngred = QTDIngredContList[i].text;
+      final String qtdIngred = qtdIngredContList[i].text;
       final String precoIngred = precoIngredContList[i].text;
 
-      if (ingred.isNotEmpty && QTDIngred.isNotEmpty && precoIngred.isNotEmpty) {
+      if (ingred.isNotEmpty && qtdIngred.isNotEmpty && precoIngred.isNotEmpty) {
         int precoIngrediente = int.parse(precoIngred);
-        int quantidade = int.parse(QTDIngred);
+        int quantidade = int.parse(qtdIngred);
 
         Ingrediente ingrediente = Ingrediente(
           ingred,
@@ -80,7 +79,7 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
       precoVenda +=
           (1.10 * tempoGas) + (precoVenda * double.parse(lucro) / 100);
 
-      var uuid = Uuid();
+      var uuid = const Uuid();
 
       ReceitaCadastro receitaN = ReceitaCadastro(
           nomeReceita,
@@ -99,7 +98,7 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
       for (var controller in ingredContList) {
         controller.clear();
       }
-      for (var controller in QTDIngredContList) {
+      for (var controller in qtdIngredContList) {
         controller.clear();
       }
       for (var controller in precoIngredContList) {
@@ -111,7 +110,7 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
   void _adicionarIngrediente() {
     setState(() {
       ingredContList.add(TextEditingController());
-      QTDIngredContList.add(TextEditingController());
+      qtdIngredContList.add(TextEditingController());
       precoIngredContList.add(TextEditingController());
     });
   }
@@ -191,7 +190,7 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
                     RoundedTextField(
                       labelText: 'QTD Ingrediente ${index + 1}',
                       hintText: 'Qual a quantidade usada?',
-                      controller: QTDIngredContList[index],
+                      controller: qtdIngredContList[index],
                       icon: Icons.shopping_basket_rounded,
                     ),
                     SizedBox(height: 10),

@@ -6,8 +6,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
-  const Home({super.key});
+  String nomeUsuario;
+  String emailUsuario; 
 
+  Home({required this.nomeUsuario, required this.emailUsuario});
+
+  
   @override
   State<Home> createState() => _HomeState();
 }
@@ -30,16 +34,12 @@ class _HomeState extends State<Home> {
 
         if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
           final DocumentSnapshot documentSnapshot = snapshot.data!.docs.first;
-          final String nome = documentSnapshot.get('nome') as String;
 
           return Scaffold(
             appBar: AppBar(
               title: const Text("EzPrice"),
             ),
-            drawer: MenuDrawer(
-              nome: nome,
-              email: currentUser?.email ?? '',
-            ),
+            drawer: MenuDrawer(nome: widget.nomeUsuario, email: widget.emailUsuario),
             body: Container(
               decoration: AppTheme.backgroundDecoration,
               padding: const EdgeInsets.symmetric(horizontal: 40),
