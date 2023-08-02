@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors, use_build_context_synchronously, prefer_const_constructors
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ezprice/views/components/app_theme.dart';
 import 'package:ezprice/views/components/menu_drawer.dart';
@@ -72,7 +74,6 @@ class _ConfigurarState extends State<Configurar> {
         }
 
         if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
-          final DocumentSnapshot documentSnapshot = snapshot.data!.docs.first;
 
           return Scaffold(
             appBar: AppBar(

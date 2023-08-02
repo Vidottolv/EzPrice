@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:ezprice/controller/receita_controller.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +6,7 @@ class RemoverReceita extends StatelessWidget {
 
   const RemoverReceita({Key? key, required this.idReceita}) : super(key: key);
 
-  void _removerReceita() {
+  void _removerReceita(BuildContext context) {
     ReceitaController().excluir(context, idReceita);
   }
 
@@ -36,7 +34,7 @@ class RemoverReceita extends StatelessWidget {
               ),
               SizedBox(height: 16),
               ElevatedButton(
-                onPressed: _removerReceita,
+                onPressed: () => _removerReceita(context),
                 child: Text('Remover'),
                 style: ElevatedButton.styleFrom(
                   primary: Colors.red,

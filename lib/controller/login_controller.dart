@@ -45,7 +45,6 @@ class LoginController {
 
 Future<String> getUserName() async {
   var user = '';
-
   await FirebaseFirestore.instance
       .collection('usuarios')
       .where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)

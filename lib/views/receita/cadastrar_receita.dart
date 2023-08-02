@@ -1,8 +1,9 @@
+// ignore_for_file: prefer_const_constructors_in_immutables, library_private_types_in_public_api
+
 import 'package:ezprice/controller/receita_controller.dart';
 import 'package:ezprice/model/ingrediente.dart';
 import 'package:ezprice/model/model_receita.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:ezprice/views/components/menu_drawer.dart';
 import 'package:ezprice/views/components/app_theme.dart';
 import 'package:ezprice/views/components/rounded_text_field.dart';
@@ -117,8 +118,6 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
 
   @override
   Widget build(BuildContext context) {
-    String? nomeUsuario = 'Teste';
-    String? emailUsuario = 'Teste@gmail.com';
 
     return Scaffold(
       appBar: AppBar(
@@ -131,15 +130,12 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
                 Navigator.pushNamedAndRemoveUntil(
                     context, '/home', (route) => false);
               },
-              icon: Icon(Icons.home),
+              icon: const Icon(Icons.home),
             ),
           ),
         ],
       ),
-      // drawer: MenuDrawer(
-      //   nome: nomeUsuario,
-      //   email: emailUsuario,
-      // ),
+      drawer: const MenuDrawer(),
       body: Container(
         decoration: AppTheme.backgroundDecoration,
         child: ListView(
@@ -151,31 +147,31 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
               controller: receitaCont,
               icon: Icons.local_cafe,
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             RoundedTextField(
               labelText: 'Rendimento',
               hintText: 'Digite qual o rendimento da Receita',
               controller: rendimento,
               icon: Icons.local_dining_rounded,
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             RoundedTextField(
               labelText: 'Lucro',
               hintText: 'Digite qual o percentual de Lucro desejado',
               controller: lucroCont,
               icon: Icons.attach_money_rounded,
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             RoundedTextField(
               labelText: 'Horas de gás',
               hintText: 'Digite quantas horas a receita leva no fogão',
               controller: gasCont,
               icon: Icons.access_time_rounded,
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             ListView.builder(
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemCount: ingredContList.length,
               itemBuilder: (BuildContext context, int index) {
                 return Column(
@@ -186,35 +182,35 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
                       controller: ingredContList[index],
                       icon: Icons.local_dining_rounded,
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     RoundedTextField(
                       labelText: 'QTD Ingrediente ${index + 1}',
                       hintText: 'Qual a quantidade usada?',
                       controller: qtdIngredContList[index],
                       icon: Icons.shopping_basket_rounded,
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     RoundedTextField(
                       labelText: 'Preço Ingrediente ${index + 1}',
                       hintText: 'Qual o preço pago no Kg deste ingrediente?',
                       controller: precoIngredContList[index],
                       icon: Icons.attach_money_rounded,
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                   ],
                 );
               },
             ),
             ElevatedButton(
               onPressed: _adicionarIngrediente,
-              child: Text('Adicionar Ingrediente'),
+              child: const Text('Adicionar Ingrediente'),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
                 _cadastrarReceita(context);
               },
-              child: Text('Cadastrar'),
+              child: const Text('Cadastrar'),
             ),
           ],
         ),
