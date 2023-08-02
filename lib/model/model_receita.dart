@@ -9,6 +9,7 @@ class ReceitaCadastro {
   final double lucro;
   final double precoVenda;
   final String idReceita;
+  final int contador;
 
   ReceitaCadastro(
     this.nomeReceita,
@@ -19,7 +20,8 @@ class ReceitaCadastro {
     this.ingrediente,
     this.precoVenda,
     this.idReceita,
-  );
+    this.contador,
+    );
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
@@ -31,6 +33,7 @@ class ReceitaCadastro {
       'ingrediente': ingrediente.map((ingred) => ingred.toJson()).toList(),
       'precoVenda': precoVenda,
       'idReceita': idReceita,
+      'contador': contador,
     };
   }
 
@@ -46,6 +49,7 @@ class ReceitaCadastro {
           .toList(),
       json['precoVenda'],
       json['idReceita'],
+      json['contador'],
     );
   }
 }

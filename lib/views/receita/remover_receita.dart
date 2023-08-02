@@ -15,11 +15,12 @@ class _RemoverReceitaState extends State<RemoverReceita> {
   void delete() {
     ReceitaController().excluir(context, idReceita);
 
-    Navigator.pushNamed(context, '/receita/visualizar');
+    Navigator.pushNamed(context,
+        '/home'); // Assim que a receita for excluída, voltaremos para a tela de Visualizar Receitas
   }
 
   //Aqui estamos chamando uma função que gera o estado de informações de uma PageRoute para outra
-  //Ou seja, aqui nós vamos nos certificar de que quando passamos o idReceita como método 
+  //Ou seja, aqui nós vamos nos certificar de que quando passamos o idReceita como método
   //lá no Visualizar Receitas esteja vindo para cá e alimentando o idReceita
   @override
   void didChangeDependencies() {
@@ -42,7 +43,8 @@ class _RemoverReceitaState extends State<RemoverReceita> {
         ),
         child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment
+                .center, //alinha esta child (onde teremos os escritos) ao centro
             children: [
               Text(
                 'Tem certeza de que deseja \nremover a receita?',
@@ -51,7 +53,8 @@ class _RemoverReceitaState extends State<RemoverReceita> {
               ),
               SizedBox(height: 16),
               InkWell(
-                onTap: () => delete(),
+                // "Botão" de exclusão
+                onTap: () => delete(), //chamada do método de exclusão
                 child: Text(
                   'Remova aqui!',
                   style: TextStyle(

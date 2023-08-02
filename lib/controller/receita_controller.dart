@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:ezprice/model/model_receita.dart';
 import 'package:ezprice/views/util.dart';
 
+import 'login_controller.dart';
 
 class ReceitaController {
-
   //Adicionando receitas dentro do nosso banco de dados
   void adicionar(context, ReceitaCadastro t) {
     FirebaseFirestore.instance
@@ -39,24 +39,24 @@ class ReceitaController {
         .catchError((e) => erro(context, 'ERRO: ${e.code.toString()}'));
   }
 
-  // Future<List<ReceitaCadastro>> listReceita(context) async {
-  //   try {
-  //     var userId = await LoginController().getUserId();
-  //     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-  //         .collection('receitas')
-  //         .where('uid', isEqualTo: userId)
-  //         .get();
-  //     List<ReceitaCadastro> receitas = [];
-  //     for (QueryDocumentSnapshot documentSnapshot in querySnapshot.docs) {
-  //       Map<String, dynamic> data =
-  //           documentSnapshot.data() as Map<String, dynamic>;
-  //       ReceitaCadastro receita = ReceitaCadastro.fromJson(data);
-  //       receitas.add(receita);
-  //     }
-  //     return receitas;
-  //   } catch (e) {
-  //     erro(context, 'Erro no retorno da receita, tente novamente.');
-  //     return [];
-  //   }
-  // }
+   Future<List<ReceitaCadastro>> listReceita(context) async {
+     try {
+       var userId = await LoginController().getUserId();
+       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+           .collection('receitas')
+           .where('uid', isEqualTo: userId)
+           .get();
+       List<ReceitaCadastro> receitas = [];
+       for (QueryDocumentSnapshot documentSnapshot in querySnapshot.docs) {
+         Map<String, dynamic> data =
+             documentSnapshot.data() as Map<String, dynamic>;
+         ReceitaCadastro receita = ReceitaCadastro.fromJson(data);
+         receitas.add(receita);
+       }
+       return receitas;
+     } catch (e) {
+       erro(context, 'Erro no retorno da receita, tente novamente.');
+       return [];
+     }
+   }
 }

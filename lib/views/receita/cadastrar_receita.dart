@@ -18,13 +18,14 @@ class CadastrarReceita extends StatefulWidget {
 }
 
 class _CadastrarReceitaState extends State<CadastrarReceita> {
-  final TextEditingController receitaCont = TextEditingController();
-  final TextEditingController rendimento = TextEditingController();
-  final TextEditingController lucroCont = TextEditingController();
-  final TextEditingController gasCont = TextEditingController();
+  TextEditingController receitaCont = TextEditingController();
+  TextEditingController rendimento = TextEditingController();
+  TextEditingController lucroCont = TextEditingController();
+  TextEditingController gasCont = TextEditingController();
   List<TextEditingController> ingredContList = [];
   List<TextEditingController> qtdIngredContList = [];
   List<TextEditingController> precoIngredContList = [];
+  int contador = 0;
 
   @override
   void dispose() {
@@ -50,14 +51,15 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
     final String lucro = lucroCont.text;
     final String gas = gasCont.text;
     final String uid = FirebaseAuth.instance.currentUser!.uid;
-
     List<Ingrediente> ingredientes = [];
     double precoVenda = 0.0;
+    int contador = 0;
 
     for (int i = 0; i < ingredContList.length; i++) {
       final String ingred = ingredContList[i].text;
       final String qtdIngred = qtdIngredContList[i].text;
       final String precoIngred = precoIngredContList[i].text;
+      contador = ingredContList.length;
 
       if (ingred.isNotEmpty && qtdIngred.isNotEmpty && precoIngred.isNotEmpty) {
         int precoIngrediente = int.parse(precoIngred);
@@ -90,7 +92,8 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
           double.parse(lucro),
           ingredientes,
           precoVenda,
-          uuid.v4());
+          uuid.v4(),
+          int.parse(contador.toString()));
       ReceitaController().adicionar(context, receitaN);
       receitaCont.clear();
       rendimento.clear();
@@ -110,6 +113,7 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
 
   void _adicionarIngrediente() {
     setState(() {
+      contador++;
       ingredContList.add(TextEditingController());
       qtdIngredContList.add(TextEditingController());
       precoIngredContList.add(TextEditingController());

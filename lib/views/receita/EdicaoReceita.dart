@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors_in_immutables
+
 import 'package:ezprice/model/model_receita.dart';
 import 'package:ezprice/views/components/rounded_text_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,15 +19,16 @@ class EdicaoReceita extends StatefulWidget {
 }
 
 class _EdicaoReceitaState extends State<EdicaoReceita> {
-  final List<Ingrediente> ingredientesList = [];
+  List<Ingrediente> ingredientesList = [];
   bool isLoading = false;
   late ReceitaCadastro receitaSalva =
-      ReceitaCadastro('', 0.0, '', '', 0.0, [], 0.0, '');
+      ReceitaCadastro('', 0.0, '', '', 0.0, [], 0.0, '', 0);
   String nomeReceita = '';
   String rendimento = '';
   String lucro = '';
   String gas = '';
   String precoVenda = '';
+  int contador = 0;
 
   final String uid = FirebaseAuth.instance.currentUser!.uid;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -83,6 +86,7 @@ class _EdicaoReceitaState extends State<EdicaoReceita> {
       ingredientesList,
       double.parse(precoVenda),
       uuid.v4(),
+      contador
     );
     ReceitaController().atualizar(context, widget.idReceita, receitaA);
   }

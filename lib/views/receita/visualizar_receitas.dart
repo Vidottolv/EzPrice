@@ -1,10 +1,11 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ezprice/views/components/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class VisualizarReceitas extends StatefulWidget {
-  VisualizarReceitas({Key? key}) : super(key: key);
 
   @override
   State<VisualizarReceitas> createState() => _VisualizarReceitasState();
@@ -33,15 +34,7 @@ class _VisualizarReceitasState extends State<VisualizarReceitas> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Visualizar Receitas'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () {
-              Navigator.pushNamed(context, '/receita/cadastrar');
-            },
-          ),
-        ],
+        title: const Text('Visualizar Receitas'),
       ),
       body: Container(
         decoration: AppTheme.backgroundDecoration,
@@ -54,7 +47,7 @@ class _VisualizarReceitasState extends State<VisualizarReceitas> {
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
-                return Center(
+                return const Center(
                   child: Text('Não foi possível conectar.'),
                 );
               case ConnectionState.waiting:
@@ -83,7 +76,7 @@ class _VisualizarReceitasState extends State<VisualizarReceitas> {
                         child: Card(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
-                            side: BorderSide(
+                            side: const BorderSide(
                               color: Colors.white,
                               width: 1.0,
                             ),
@@ -97,7 +90,7 @@ class _VisualizarReceitasState extends State<VisualizarReceitas> {
                                   return Dialog(
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10.0),
-                                      side: BorderSide(
+                                      side: const BorderSide(
                                         color: Colors.white,
                                         width: 1.0,
                                       ),
@@ -109,13 +102,13 @@ class _VisualizarReceitasState extends State<VisualizarReceitas> {
                                       child: Column(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          Text(
+                                          const Text(
                                             'Opções',
                                             style: TextStyle(
                                               color: Colors.white,
                                             ),
                                           ),
-                                          SizedBox(height: 16),
+                                          const SizedBox(height: 16),
                                           Container(
                                             decoration: BoxDecoration(
                                               borderRadius:
@@ -129,7 +122,7 @@ class _VisualizarReceitasState extends State<VisualizarReceitas> {
                                                 vertical: 10),
                                             child: ElevatedButton(
                                               style: ElevatedButton.styleFrom(
-                                                primary: Colors.transparent,
+                                                backgroundColor: Colors.transparent,
                                                 shape: RoundedRectangleBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -144,7 +137,7 @@ class _VisualizarReceitasState extends State<VisualizarReceitas> {
                                                   arguments: idReceita,
                                                 );
                                               },
-                                              child: Text(
+                                              child: const Text(
                                                 'Editar',
                                                 style: TextStyle(
                                                   color: Colors.white,
@@ -152,7 +145,7 @@ class _VisualizarReceitasState extends State<VisualizarReceitas> {
                                               ),
                                             ),
                                           ),
-                                          SizedBox(height: 10),
+                                          const SizedBox(height: 10),
                                           Container(
                                             decoration: BoxDecoration(
                                               borderRadius:
@@ -179,7 +172,7 @@ class _VisualizarReceitasState extends State<VisualizarReceitas> {
                                                     '/receita/remover_receita',
                                                     arguments: idReceita);
                                               },
-                                              child: Text(
+                                              child: const Text(
                                                 'Remover',
                                                 style: TextStyle(
                                                   color: Colors.white,
@@ -187,9 +180,9 @@ class _VisualizarReceitasState extends State<VisualizarReceitas> {
                                               ),
                                             ),
                                           ),
-                                          SizedBox(height: 16),
+                                          const SizedBox(height: 16),
                                           IconButton(
-                                            icon: Icon(
+                                            icon: const Icon(
                                               Icons.close,
                                               color: Colors.white,
                                             ),
@@ -205,7 +198,7 @@ class _VisualizarReceitasState extends State<VisualizarReceitas> {
                               );
                             },
                             child: ListTile(
-                              leading: Icon(
+                              leading: const Icon(
                                 Icons.menu_book_rounded,
                                 color: Colors.white,
                               ),
@@ -213,7 +206,7 @@ class _VisualizarReceitasState extends State<VisualizarReceitas> {
                                 alignment: Alignment.topLeft,
                                 child: Text(
                                   nomeReceita,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.white,
                                   ),
                                 ),
@@ -223,19 +216,19 @@ class _VisualizarReceitasState extends State<VisualizarReceitas> {
                                 children: [
                                   Text(
                                     'Rendimento: $rendimentoReceita',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: Colors.white,
                                     ),
                                   ),
                                   Text(
                                     'Lucro: $lucroPercentual%',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: Colors.white,
                                     ),
                                   ),
                                   Text(
                                     'Preço Venda: ${precoVenda.toStringAsFixed(3)}',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: Colors.white,
                                     ),
                                   )
