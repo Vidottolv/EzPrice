@@ -30,8 +30,8 @@ class ReceitaController {
   }
 
   //Excluindo receitas dentro do nosso banco de dados
-  void excluir(context, idReceita) {
-    FirebaseFirestore.instance
+  void excluir(context, idReceita) async {
+    await FirebaseFirestore.instance
         .collection('receitas')
         .doc(idReceita)
         .delete()

@@ -12,8 +12,7 @@ class VisualizarReceitas extends StatefulWidget {
 
 class _VisualizarReceitasState extends State<VisualizarReceitas> {
   late String uidUsuarioLogado;
-  String selectedReceitaId =
-      ''; // Variável para armazenar o idReceita selecionado
+  String selectedReceitaId = '';
 
   @override
   void initState() {
@@ -76,7 +75,7 @@ class _VisualizarReceitasState extends State<VisualizarReceitas> {
                       double precoVenda = item['precoVenda'] ?? 0.0;
 
                       // Armazenar o idReceita selecionado
-                      final idReceita = document.id;
+                      String idReceita = document.id;
 
                       return Padding(
                         padding: const EdgeInsets.symmetric(

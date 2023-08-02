@@ -1,13 +1,30 @@
+// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors
+
 import 'package:ezprice/controller/receita_controller.dart';
 import 'package:flutter/material.dart';
 
-class RemoverReceita extends StatelessWidget {
-  final String idReceita;
+class RemoverReceita extends StatefulWidget {
+  @override
+  State<RemoverReceita> createState() => _RemoverReceitaState();
+}
 
-  const RemoverReceita({Key? key, required this.idReceita}) : super(key: key);
+class _RemoverReceitaState extends State<RemoverReceita> {
+  String idReceita = '';
 
-  void _removerReceita(BuildContext context) {
+  //Tornando o Receita Controller Excluir um método local, para limpar a chamada do método dentro do código
+  void delete() {
     ReceitaController().excluir(context, idReceita);
+
+    Navigator.pushNamed(context, '/receita/visualizar');
+  }
+
+  //Aqui estamos chamando uma função que gera o estado de informações de uma PageRoute para outra
+  //Ou seja, aqui nós vamos nos certificar de que quando passamos o idReceita como método 
+  //lá no Visualizar Receitas esteja vindo para cá e alimentando o idReceita
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    idReceita = ModalRoute.of(context)?.settings.arguments as String;
   }
 
   @override
@@ -28,18 +45,22 @@ class RemoverReceita extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Tem certeza de que deseja remover a receita?',
-                style: TextStyle(fontSize: 18),
+                'Tem certeza de que deseja \nremover a receita?',
+                style: TextStyle(fontSize: 24),
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () => _removerReceita(context),
-                child: Text('Remover'),
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.red,
+              InkWell(
+                onTap: () => delete(),
+                child: Text(
+                  'Remova aqui!',
+                  style: TextStyle(
+                    fontSize: 24,
+                    color: Colors.white,
+                    decoration: TextDecoration.underline,
+                  ),
                 ),
-              ),
+              )
             ],
           ),
         ),

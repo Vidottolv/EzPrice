@@ -1,9 +1,9 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:ezprice/views/components/rounded_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:ezprice/views/components/app_theme.dart';
 import 'package:ezprice/views/components/menu_drawer.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CadastrarIngrediente extends StatelessWidget {
   final TextEditingController nomeController = TextEditingController();

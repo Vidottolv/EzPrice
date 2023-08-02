@@ -47,9 +47,7 @@ Future<void> main() async {
         '/receita/EdicaoReceita': (context) => EdicaoReceita(
               idReceita: '',
             ),
-        '/receita/remover_receita': (context) => RemoverReceita(
-              idReceita: '',
-            ),
+        '/receita/remover_receita': (context) => RemoverReceita(),
       },
     ),
   );
