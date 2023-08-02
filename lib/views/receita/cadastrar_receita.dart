@@ -136,10 +136,10 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
           ),
         ],
       ),
-      drawer: MenuDrawer(
-        nome: nomeUsuario,
-        email: emailUsuario,
-      ),
+      // drawer: MenuDrawer(
+      //   nome: nomeUsuario,
+      //   email: emailUsuario,
+      // ),
       body: Container(
         decoration: AppTheme.backgroundDecoration,
         child: ListView(

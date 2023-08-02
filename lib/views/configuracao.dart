@@ -73,7 +73,6 @@ class _ConfigurarState extends State<Configurar> {
 
         if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
           final DocumentSnapshot documentSnapshot = snapshot.data!.docs.first;
-          final String nome = documentSnapshot.get('nome') as String;
 
           return Scaffold(
             appBar: AppBar(
@@ -91,10 +90,7 @@ class _ConfigurarState extends State<Configurar> {
                 ),
               ],
             ),
-            drawer: MenuDrawer(
-              nome: nome,
-              email: currentUser?.email ?? '',
-            ),
+            drawer: MenuDrawer(),
             body: Container(
               decoration: AppTheme.backgroundDecoration,
               padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),

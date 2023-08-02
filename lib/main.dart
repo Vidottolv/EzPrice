@@ -34,7 +34,7 @@ Future<void> main() async {
         '/cadastrar': (context) => CadastrarUsuario(),
         '/esqueceu-senha': (context) => EsqueceuSenha(),
         '/esqueceu-senha/nova-senha': (context) => NovaSenha(),
-        '/home': (context) => Home(emailUsuario: '', nomeUsuario: '',),
+        '/home': (context) => Home(),
         '/sobre': (context) => const Sobre(),
         '/ingrediente/cadastrar': (context) => CadastrarIngrediente(),
         '/ingrediente/visualizar': (context) => VisualizarIngredientes(),

@@ -53,10 +53,7 @@ class VisualizarIngredientes extends StatelessWidget {
           },
         ),
       ),
-      drawer: MenuDrawer(
-        nome: 'Teste de Teste de Teste',
-        email: 'teste@example.com',
-      ),
+      drawer: MenuDrawer(),
       body: Container(
         decoration: AppTheme.backgroundDecoration,
         padding: const EdgeInsets.symmetric(horizontal: 40),

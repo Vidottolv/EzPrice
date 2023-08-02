@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -41,19 +43,37 @@ class LoginController {
     });
   }
 
-  Future<String> loggedUser() async {
-    var user = '';
-    await FirebaseFirestore.instance
-        .collection('usuarios')
-        .where('uid', isEqualTo: getUserId())
-        .get()
-        .then(
-      (result) {
-        user = result.docs[0].data()['nome'] ?? '';
-      },
-    );
-    return user;
-  }
+Future<String> getUserName() async {
+  var user = '';
+
+  await FirebaseFirestore.instance
+      .collection('usuarios')
+      .where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+      .get()
+      .then(
+    (result) {
+      user = result.docs[0].data()['nome'] ?? '';
+    },
+  );
+
+  return user;
+}
+
+Future<String> getUserEmail() async {
+  var email = '';
+
+  await FirebaseFirestore.instance
+      .collection('usuarios')
+      .where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+      .get()
+      .then(
+    (result) {
+      email = result.docs[0].data()['email'] ?? '';
+    },
+  );
+
+  return email;
+}
 
   //
   // LOGIN
