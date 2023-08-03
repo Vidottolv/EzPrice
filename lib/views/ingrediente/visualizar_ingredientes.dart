@@ -8,7 +8,6 @@ import 'package:ezprice/views/components/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class VisualizarIngredientes extends StatefulWidget {
-
   @override
   State<VisualizarIngredientes> createState() => _VisualizarIngredientesState();
 }
@@ -38,9 +37,7 @@ class _VisualizarIngredientesState extends State<VisualizarIngredientes> {
       drawer: const MenuDrawer(),
       appBar: AppBar(
         title: const Text('Visualizar Ingredientes'),
-        actions: [
-          CustomBackButton()
-        ],
+        actions: [CustomBackButton()],
       ),
       body: Container(
         decoration: AppTheme.backgroundDecoration,
@@ -165,7 +162,8 @@ class _VisualizarIngredientesState extends State<VisualizarIngredientes> {
                                                 vertical: 10),
                                             child: ElevatedButton(
                                               style: ElevatedButton.styleFrom(
-                                                backgroundColor: Colors.transparent,
+                                                backgroundColor:
+                                                    Colors.transparent,
                                                 shape: RoundedRectangleBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(

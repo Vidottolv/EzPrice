@@ -32,4 +32,10 @@ class IngredienteController {
           context, '/home', (route) => false));
   }
 
+  // void atualizar(context, idIngrediente) async {
+  //   await FirebaseFirestore.instance
+  //   .collection('ingredientes')
+  //   .doc()
+  // }
+
 }

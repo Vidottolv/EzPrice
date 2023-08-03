@@ -6,18 +6,30 @@ import 'package:flutter/material.dart';
 
 import 'package:ezprice/views/util.dart';
 
-class LoginController {
-  //
-  // Criação de um nova conta de usuário
-  // no Firebase Authentication
-  //
+class LoginController{
+  final String emailRegex = r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$';
+  
+  bool isValidEmail(String email) {
+  RegExp regex = RegExp(emailRegex);
+  return regex.hasMatch(email);
+  }
+
   criarConta(context, nome, email, senha) {
+    if(nome.isEmpty || email.isEmpty || senha.isEmpty){
+      erro(context, 'Preencha todos os campos.');
+      return;
+    } 
+
+    if(isValidEmail(email))
+    {
+      erro(context, 'O formato do email é inválido.');
+    }
+
     FirebaseAuth.instance
         .createUserWithEmailAndPassword(
       email: email,
       password: senha,
-    )
-        .then((resultado) {
+    ).then((resultado) {
       //Conta Criada com Sucesso
       FirebaseFirestore.instance.collection('usuarios').add({
         'uid': resultado.user!.uid,
@@ -80,6 +92,11 @@ Future<String> getUserEmail() async {
   // no serviço Firebase Authentication
   //
   login(context, email, senha) {
+    if(email.isEmpty || senha.isEmpty){
+      erro(context, 'Preencha todos os campos.');
+      return;
+    }
+    
     FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email, password: senha)
         .then((resultado) {

@@ -47,12 +47,14 @@ class CadastrarUsuario extends StatelessWidget {
                       controller: senhaController,
                       labelText: "Senha",
                       hintText: "Digite sua Senha",
+                      isPassword: true,
                       icon: Icons.lock_rounded),
                   SizedBox(height: 16),
                   RoundedTextField(
                       controller: confirmarSenhaController,
                       labelText: "Confirma Senha",
                       hintText: "Confirme sua Senha",
+                      isPassword: true,
                       icon: Icons.lock_rounded),
                   SizedBox(height: 16),
                   ElevatedButton(

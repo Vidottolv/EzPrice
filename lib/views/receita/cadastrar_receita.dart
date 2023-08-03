@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors_in_immutables, library_private_types_in_public_api
 
+//import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ezprice/controller/receita_controller.dart';
 import 'package:ezprice/model/model_ingrediente.dart';
 import 'package:ezprice/model/model_receita.dart';
@@ -27,6 +28,33 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
   List<TextEditingController> qtdIngredContList = [];
   List<TextEditingController> precoIngredContList = [];
   int contador = 0;
+  List<Ingrediente> ingredientesFirestore = [];
+
+  @override
+  void initState() {
+    super.initState();
+    // obterIngredientesFirestore();
+  }
+
+  // Future<void> obterIngredientesFirestore() async{
+  //   try {
+  //     var querySnapshot = await FirebaseFirestore.instance
+  //     .collection('ingredientes')
+  //     .get();
+
+  //     List<Ingrediente> ingredientes = querySnapshot.docs.map((doc) {
+  //       Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+  //       return Ingrediente(
+  //         ingrediente: data['nome'] ?? '',
+  //         preco: data['preco'],
+          
+  //         // ... outros campos do ingrediente ...
+  //       );
+  //     }).toList();
+  //   } catch (e) {
+  //     print ('Erro ao obter os ingredientes do Firestore');
+  //   }
+  // }
 
   @override
   void dispose() {
@@ -59,22 +87,20 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
     for (int i = 0; i < ingredContList.length; i++) {
       final String ingred = ingredContList[i].text;
       final String qtdIngred = qtdIngredContList[i].text;
-      final String precoIngred = precoIngredContList[i].text;
       contador = ingredContList.length;
 
-      if (ingred.isNotEmpty && qtdIngred.isNotEmpty && precoIngred.isNotEmpty) {
-        int precoIngrediente = int.parse(precoIngred);
+      if (ingred.isNotEmpty && qtdIngred.isNotEmpty) {
         int quantidade = int.parse(qtdIngred);
 
-        // Ingrediente ingrediente = Ingrediente(
-        //   ingred,
-        //   quantidade,
-        //   precoIngrediente,
-        // );
+        //  Ingrediente ingrediente = Ingrediente(
+        //    ingred,
+        //    quantidade,
+        //    precoIngrediente,
+        //  )
 
-        // ingredientes.add(ingrediente);
+        //  ingredientes.add(ingrediente);
 
-        precoVenda += precoIngrediente * quantidade;
+        precoVenda += quantidade;
       }
     }
 
