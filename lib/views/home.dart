@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:ezprice/views/components/app_theme.dart';
 import 'package:ezprice/views/components/menu_drawer.dart';
 import 'package:ezprice/views/components/transparent_card.dart';
@@ -22,11 +24,11 @@ class _HomeState extends State<Home> {
       body: Container(
         decoration: AppTheme.backgroundDecoration,
         padding: const EdgeInsets.symmetric(horizontal: 40),
-        child: Center(
+        child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const SizedBox(height: 16),
+              const SizedBox(height: 12),
               TransparentCard(
                 title: "Minhas Receitas",
                 text:
@@ -36,7 +38,7 @@ class _HomeState extends State<Home> {
                   Navigator.pushNamed(context, '/receita/visualizar');
                 },
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 12),
               TransparentCard(
                 title: "Cadastrar Receitas",
                 text: "Cadastre novas receitas no sistema.",
@@ -45,14 +47,23 @@ class _HomeState extends State<Home> {
                   Navigator.pushNamed(context, '/receita/cadastrar');
                 },
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 12),
+              TransparentCard(
+                title: "Meus Ingredientes",
+                text: "Consulte seus materiais aqui. Você pode alterar as informações ou excluir o documento clicando nele.", 
+                buttonText: "Consultar", 
+                onPressed: () {
+                  Navigator.pushNamed(context, '/ingrediente/visualizar');
+                }),
+              const SizedBox(height: 12),
               TransparentCard(
                   title: "Cadastrar Materiais",
                   text: "Cadastre seus materiais aqui",
                   buttonText: "Cadastrar",
                   onPressed: () {
                     Navigator.pushNamed(context, '/ingrediente/cadastrar');
-                  })
+                  }),
+              const SizedBox(height: 100)
             ],
           ),
         ),

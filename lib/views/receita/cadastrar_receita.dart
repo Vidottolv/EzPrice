@@ -1,8 +1,9 @@
 // ignore_for_file: prefer_const_constructors_in_immutables, library_private_types_in_public_api
 
 import 'package:ezprice/controller/receita_controller.dart';
-import 'package:ezprice/model/ingrediente.dart';
+import 'package:ezprice/model/model_ingrediente.dart';
 import 'package:ezprice/model/model_receita.dart';
+import 'package:ezprice/views/components/back_home.dart';
 import 'package:flutter/material.dart';
 import 'package:ezprice/views/components/menu_drawer.dart';
 import 'package:ezprice/views/components/app_theme.dart';
@@ -65,13 +66,13 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
         int precoIngrediente = int.parse(precoIngred);
         int quantidade = int.parse(qtdIngred);
 
-        Ingrediente ingrediente = Ingrediente(
-          ingred,
-          quantidade,
-          precoIngrediente,
-        );
+        // Ingrediente ingrediente = Ingrediente(
+        //   ingred,
+        //   quantidade,
+        //   precoIngrediente,
+        // );
 
-        ingredientes.add(ingrediente);
+        // ingredientes.add(ingrediente);
 
         precoVenda += precoIngrediente * quantidade;
       }
@@ -127,16 +128,7 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
       appBar: AppBar(
         title: const Text("EzPrice"),
         actions: [
-          Tooltip(
-            message: 'Retornar ao menu',
-            child: IconButton(
-              onPressed: () {
-                Navigator.pushNamedAndRemoveUntil(
-                    context, '/home', (route) => false);
-              },
-              icon: const Icon(Icons.home),
-            ),
-          ),
+          CustomBackButton()
         ],
       ),
       drawer: const MenuDrawer(),

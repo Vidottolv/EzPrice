@@ -34,7 +34,7 @@ class AppTheme {
   static BoxDecoration backgroundDecoration = const BoxDecoration(
     image: DecorationImage(
       image: AssetImage('images/gradMorpheu.png'),
-      fit: BoxFit.cover,
+      fit: BoxFit.fill,
     ),
   );
 }

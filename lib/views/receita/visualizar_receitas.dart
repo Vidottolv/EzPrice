@@ -1,6 +1,8 @@
 // ignore_for_file: use_key_in_widget_constructors
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ezprice/views/components/back_home.dart';
+import 'package:ezprice/views/components/menu_drawer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ezprice/views/components/app_theme.dart';
 import 'package:flutter/material.dart';
@@ -33,8 +35,12 @@ class _VisualizarReceitasState extends State<VisualizarReceitas> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const MenuDrawer(),
       appBar: AppBar(
         title: const Text('Visualizar Receitas'),
+        actions: [
+          CustomBackButton()
+        ],
       ),
       body: Container(
         decoration: AppTheme.backgroundDecoration,
@@ -159,7 +165,7 @@ class _VisualizarReceitasState extends State<VisualizarReceitas> {
                                                 vertical: 10),
                                             child: ElevatedButton(
                                               style: ElevatedButton.styleFrom(
-                                                primary: Colors.transparent,
+                                                backgroundColor: Colors.transparent,
                                                 shape: RoundedRectangleBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(

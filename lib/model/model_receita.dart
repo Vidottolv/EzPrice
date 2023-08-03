@@ -1,4 +1,4 @@
-import 'package:ezprice/model/ingrediente.dart';
+import 'package:ezprice/model/model_ingrediente.dart';
 
 class ReceitaCadastro {
   final String nomeReceita;
