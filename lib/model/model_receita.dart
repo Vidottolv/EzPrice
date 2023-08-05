@@ -20,7 +20,7 @@ class ReceitaCadastro {
     this.ingrediente,
     this.precoVenda,
     this.idReceita,
-    this.contador,
+    this.contador
     );
 
   Map<String, dynamic> toJson() {

@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors_in_immutables, library_private_types_in_public_api
 
 //import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ezprice/controller/receita_controller.dart';
 import 'package:ezprice/model/model_ingrediente.dart';
 import 'package:ezprice/model/model_receita.dart';
@@ -24,37 +25,15 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
   TextEditingController rendimento = TextEditingController();
   TextEditingController lucroCont = TextEditingController();
   TextEditingController gasCont = TextEditingController();
-  List<TextEditingController> ingredContList = [];
-  List<TextEditingController> qtdIngredContList = [];
-  List<TextEditingController> precoIngredContList = [];
-  int contador = 0;
-  List<Ingrediente> ingredientesFirestore = [];
+  Map<String, bool> ingredientesSelecionadosCheckbox =
+      {}; // Mapa para controlar os ingredientes selecionados
+  Map<String, double> ingredienteseSuasQuantidades =
+      {}; // Mapa para armazenar os ingredientes selecionados e suas quantidades correspondentes
 
   @override
   void initState() {
     super.initState();
-    // obterIngredientesFirestore();
   }
-
-  // Future<void> obterIngredientesFirestore() async{
-  //   try {
-  //     var querySnapshot = await FirebaseFirestore.instance
-  //     .collection('ingredientes')
-  //     .get();
-
-  //     List<Ingrediente> ingredientes = querySnapshot.docs.map((doc) {
-  //       Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-  //       return Ingrediente(
-  //         ingrediente: data['nome'] ?? '',
-  //         preco: data['preco'],
-          
-  //         // ... outros campos do ingrediente ...
-  //       );
-  //     }).toList();
-  //   } catch (e) {
-  //     print ('Erro ao obter os ingredientes do Firestore');
-  //   }
-  // }
 
   @override
   void dispose() {
@@ -62,15 +41,6 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
     rendimento.dispose();
     lucroCont.dispose();
     gasCont.dispose();
-    for (var controller in ingredContList) {
-      controller.dispose();
-    }
-    for (var controller in qtdIngredContList) {
-      controller.dispose();
-    }
-    for (var controller in precoIngredContList) {
-      controller.dispose();
-    }
     super.dispose();
   }
 
@@ -81,33 +51,12 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
     final String gas = gasCont.text;
     final String uid = FirebaseAuth.instance.currentUser!.uid;
     List<Ingrediente> ingredientes = [];
-    double precoVenda = 0.0;
     int contador = 0;
 
-    for (int i = 0; i < ingredContList.length; i++) {
-      final String ingred = ingredContList[i].text;
-      final String qtdIngred = qtdIngredContList[i].text;
-      contador = ingredContList.length;
-
-      if (ingred.isNotEmpty && qtdIngred.isNotEmpty) {
-        int quantidade = int.parse(qtdIngred);
-
-        //  Ingrediente ingrediente = Ingrediente(
-        //    ingred,
-        //    quantidade,
-        //    precoIngrediente,
-        //  )
-
-        //  ingredientes.add(ingrediente);
-
-        precoVenda += quantidade;
-      }
-    }
-
     if (nomeReceita.isNotEmpty && ingredientes.isNotEmpty) {
-      double tempoGas = double.parse(gas);
-      precoVenda +=
-          (1.10 * tempoGas) + (precoVenda * double.parse(lucro) / 100);
+      // double tempoGas = double.parse(gas);
+      double precoVenda = 1.10;
+      //     (1.10 * tempoGas) + (precoVenda * double.parse(lucro) / 100);
 
       var uuid = const Uuid();
 
@@ -126,36 +75,26 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
       rendimento.clear();
       lucroCont.clear();
       gasCont.clear();
-      for (var controller in ingredContList) {
-        controller.clear();
-      }
-      for (var controller in qtdIngredContList) {
-        controller.clear();
-      }
-      for (var controller in precoIngredContList) {
-        controller.clear();
-      }
+      ingredientesSelecionadosCheckbox.clear();
+      ingredienteseSuasQuantidades.clear();
     }
   }
 
-  void _adicionarIngrediente() {
-    setState(() {
-      contador++;
-      ingredContList.add(TextEditingController());
-      qtdIngredContList.add(TextEditingController());
-      precoIngredContList.add(TextEditingController());
-    });
-  }
+  // void _adicionarIngrediente() {
+  //   setState(() {
+  //     contador++;
+  //     // ingredContList.add(TextEditingController());
+  //     // qtdIngredContList.add(TextEditingController());
+  //     // precoIngredContList.add(TextEditingController());
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: const Text("EzPrice"),
-        actions: [
-          CustomBackButton()
-        ],
+        actions: [CustomBackButton()],
       ),
       drawer: const MenuDrawer(),
       body: Container(
@@ -191,43 +130,88 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
               icon: Icons.access_time_rounded,
             ),
             const SizedBox(height: 10),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: ingredContList.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Column(
-                  children: [
-                    RoundedTextField(
-                      labelText: 'Ingrediente ${index + 1}',
-                      hintText: 'Digite qual o ingrediente',
-                      controller: ingredContList[index],
-                      icon: Icons.local_dining_rounded,
-                    ),
-                    const SizedBox(height: 10),
-                    RoundedTextField(
-                      labelText: 'QTD Ingrediente ${index + 1}',
-                      hintText: 'Qual a quantidade usada?',
-                      controller: qtdIngredContList[index],
-                      icon: Icons.shopping_basket_rounded,
-                    ),
-                    const SizedBox(height: 10),
-                    RoundedTextField(
-                      labelText: 'Preço Ingrediente ${index + 1}',
-                      hintText: 'Qual o preço pago no Kg deste ingrediente?',
-                      controller: precoIngredContList[index],
-                      icon: Icons.attach_money_rounded,
-                    ),
-                    const SizedBox(height: 10),
-                  ],
+            Text(
+              'Ingredientes:',
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            ),
+            StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection('ingredientes')
+                  .orderBy('ingrediente',
+                      descending:
+                          false) // Ordena os documentos pelo campo 'ingrediente'
+                  .snapshots(),
+              builder: ((context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                  return Center(
+                    child: Text("Nenhum item encontrado."),
+                  );
+                }
+
+                return ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: ((context, index) {
+                    var item = snapshot.data!.docs[index];
+                    var nomeItem = item['ingrediente'] ??
+                        'Sem nome'; // Supondo que 'nome' é um campo no documento
+                    return ListTile(
+                      leading: Checkbox(
+                        value:
+                            ingredientesSelecionadosCheckbox[nomeItem] ?? false,
+                        onChanged: (value) {
+                          setState(() {
+                            ingredientesSelecionadosCheckbox[nomeItem] = value ??
+                                false; // Atualiza a variável para controlar a visibilidade
+                            if (value == true) {
+                              ingredienteseSuasQuantidades[nomeItem] =
+                                  0.0; // Inicializa a quantidade do ingrediente como 0
+                            } else {
+                              ingredienteseSuasQuantidades.remove(
+                                  nomeItem); // Remove o ingrediente do mapa caso seja deselecionado
+                            }
+                          });
+                        },
+                      ),
+                      title: Text(
+                        nomeItem,
+                        style: const TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
+                    );
+                  }),
                 );
-              },
+              }),
             ),
-            ElevatedButton(
-              onPressed: _adicionarIngrediente,
-              child: const Text('Adicionar Ingrediente'),
-            ),
-            const SizedBox(height: 10),
+            ...ingredienteseSuasQuantidades.entries.map((entry) {
+              var nomeItem = entry.key;
+              var quantidade = entry.value;
+              return Column(
+                children: [
+                  RoundedTextField(
+                    labelText: 'Quantidade de $nomeItem',
+                    hintText: 'Digite a quantidade de $nomeItem a ser usada.',
+                    controller:
+                        TextEditingController(text: quantidade.toString()),
+                    icon: Icons.local_dining,
+                  ),
+                  const SizedBox(height: 10),
+                ],
+              );
+            }).toList(),
+
+            // ElevatedButton(
+            //   onPressed: _adicionarIngrediente,
+            //   child: const Text('Adicionar Ingrediente'),
+            // ),
+            // const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
                 _cadastrarReceita(context);

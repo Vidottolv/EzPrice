@@ -15,7 +15,7 @@ class RoundedTextField extends StatelessWidget {
       required this.controller,
       required this.icon,
       this.keyboardType = TextInputType.text,
-      this.isPassword = false})
+     this.isPassword = false})
       : super(key: key);
 
   @override

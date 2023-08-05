@@ -1,3 +1,5 @@
+import 'package:ezprice/views/receita/teste.dart';
+
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -50,6 +52,7 @@ Future<void> main() async {
             ),
         '/receita/remover_receita': (context) => RemoverReceita(),
         '/ingrediente/remover_ingrediente': (context) => remover_ingrediente(),
+        '/receita/teste':(context) => teste()
       },
     ),
   );
