@@ -28,7 +28,9 @@ class RoundedTextField extends StatelessWidget {
       ),
       child: TextField(
         controller: controller,
-        style: const TextStyle(color: Colors.white),
+        style: const TextStyle(
+          color: Colors.white,
+          fontFamily: 'Inknut Antiqua'),
         autofocus: true,
         keyboardType: keyboardType,
         obscureText: isPassword,

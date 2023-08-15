@@ -50,15 +50,15 @@ class _HomeState extends State<Home> {
               const SizedBox(height: 12),
               TransparentCard(
                 title: "Meus Ingredientes",
-                text: "Consulte seus materiais aqui. Você pode alterar as informações ou excluir o documento clicando nele.", 
+                text: "Consulte seus ingredientes aqui. Você pode alterar as informações ou excluir o documento clicando nele.", 
                 buttonText: "Consultar", 
                 onPressed: () {
                   Navigator.pushNamed(context, '/ingrediente/visualizar');
                 }),
               const SizedBox(height: 12),
               TransparentCard(
-                  title: "Cadastrar Materiais",
-                  text: "Cadastre seus materiais aqui",
+                  title: "Cadastrar Ingredientes",
+                  text: "Cadastre seus ingredientes aqui",
                   buttonText: "Cadastrar",
                   onPressed: () {
                     Navigator.pushNamed(context, '/ingrediente/cadastrar');

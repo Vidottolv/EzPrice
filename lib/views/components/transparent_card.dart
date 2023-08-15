@@ -17,7 +17,7 @@ class TransparentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.transparent,
+      color: Color.fromRGBO(231, 161, 122, 0.92),
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
@@ -34,6 +34,7 @@ class TransparentCard extends StatelessWidget {
                 color: Colors.white,
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
+                fontFamily: 'Inknut Antiqua'
               ),
             ),
             SizedBox(height: 10),
@@ -42,6 +43,7 @@ class TransparentCard extends StatelessWidget {
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 16,
+                fontFamily: 'Inknut Antiqua',
               ),
             ),
             SizedBox(height: 16),

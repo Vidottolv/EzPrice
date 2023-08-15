@@ -57,7 +57,6 @@ class _EdicaoReceitaState extends State<EdicaoReceita> {
           rendimento = receitaSalva.rendimento;
           lucro = receitaSalva.lucro.toString();
           gas = receitaSalva.tempoDeGas.toString();
-          // Outros campos que você precisa atualizar
           isLoading = false;
         });
       } else {
@@ -116,12 +115,6 @@ class _EdicaoReceitaState extends State<EdicaoReceita> {
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
           : Container(
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('images/gradMorpheu.png'),
-                  fit: BoxFit.cover,
-                ),
-              ),
               padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
               child: ListView(
                 children: [

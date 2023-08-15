@@ -33,11 +33,8 @@ class _RemoverIngredienteState extends State<remover_ingrediente> {
       ),
       body: Container(
         decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('images/gradMorpheu.png'),
-            fit: BoxFit.cover,
+            color: const Color.fromRGBO(231, 161, 122, 0.92),
           ),
-        ),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment

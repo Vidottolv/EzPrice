@@ -36,11 +36,8 @@ class _RemoverReceitaState extends State<RemoverReceita> {
       ),
       body: Container(
         decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('images/gradMorpheu.png'),
-            fit: BoxFit.cover,
+          color: const Color.fromRGBO(231, 161, 122, 0.92),
           ),
-        ),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment
@@ -48,7 +45,10 @@ class _RemoverReceitaState extends State<RemoverReceita> {
             children: [
               Text(
                 'Tem certeza de que deseja \nremover a receita?',
-                style: TextStyle(fontSize: 24),
+                style: TextStyle(
+                  fontSize: 24,
+                  fontFamily: 'Inknut Antiqua'
+                ),
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 16),

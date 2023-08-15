@@ -29,6 +29,7 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
       {}; // Mapa para controlar os ingredientes selecionados
   Map<String, double> ingredienteseSuasQuantidades =
       {}; // Mapa para armazenar os ingredientes selecionados e suas quantidades correspondentes
+  Map<String, TextEditingController> quantidadeNaReceita = {};
 
   @override
   void initState() {
@@ -54,8 +55,9 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
     int contador = 0;
 
     if (nomeReceita.isNotEmpty && ingredientes.isNotEmpty) {
-      // double tempoGas = double.parse(gas);
+      double tempoGas = double.parse(gas);
       double precoVenda = 1.10;
+
       //     (1.10 * tempoGas) + (precoVenda * double.parse(lucro) / 100);
 
       var uuid = const Uuid();
@@ -79,15 +81,6 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
       ingredienteseSuasQuantidades.clear();
     }
   }
-
-  // void _adicionarIngrediente() {
-  //   setState(() {
-  //     contador++;
-  //     // ingredContList.add(TextEditingController());
-  //     // qtdIngredContList.add(TextEditingController());
-  //     // precoIngredContList.add(TextEditingController());
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -138,11 +131,9 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
             StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
                   .collection('ingredientes')
-                  .orderBy('ingrediente',
-                      descending:
-                          false) // Ordena os documentos pelo campo 'ingrediente'
+                  .orderBy('ingrediente', descending: false)
                   .snapshots(),
-              builder: ((context, snapshot) {
+              builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
                     child: CircularProgressIndicator(),
@@ -154,64 +145,80 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
                   );
                 }
 
+                double precoVenda = 0.0;
+                for (var entry in ingredienteseSuasQuantidades.entries) {
+                  var nomeItem = entry.key;
+                  var quantidade = entry.value;
+
+                  // Buscar o documento do ingrediente correspondente
+                  var ingredienteDoc = snapshot.data!.docs.firstWhere(
+                    (doc) => doc['ingrediente'] == nomeItem
+                  );
+
+                  double precoIngrediente = ingredienteDoc[
+                      'preco']; // Substitua pelo nome correto do campo do preço
+                  precoVenda += quantidade * precoIngrediente;
+                }
+
                 return ListView.builder(
                   shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: snapshot.data!.docs.length,
-                  itemBuilder: ((context, index) {
+                  itemBuilder: (context, index) {
                     var item = snapshot.data!.docs[index];
-                    var nomeItem = item['ingrediente'] ??
-                        'Sem nome'; // Supondo que 'nome' é um campo no documento
-                    return ListTile(
-                      leading: Checkbox(
-                        value:
-                            ingredientesSelecionadosCheckbox[nomeItem] ?? false,
-                        onChanged: (value) {
-                          setState(() {
-                            ingredientesSelecionadosCheckbox[nomeItem] = value ??
-                                false; // Atualiza a variável para controlar a visibilidade
-                            if (value == true) {
-                              ingredienteseSuasQuantidades[nomeItem] =
-                                  0.0; // Inicializa a quantidade do ingrediente como 0
-                            } else {
-                              ingredienteseSuasQuantidades.remove(
-                                  nomeItem); // Remove o ingrediente do mapa caso seja deselecionado
-                            }
-                          });
-                        },
-                      ),
-                      title: Text(
-                        nomeItem,
-                        style: const TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
-                      ),
+                    var nomeItem = item['ingrediente'] ?? 'Sem nome';
+                    TextEditingController quantidadeNaReceita =
+                        TextEditingController(
+                            text: ingredienteseSuasQuantidades[nomeItem]
+                                    ?.toString() ??
+                                '0.0');
+                    return Row(
+                      children: [
+                        Checkbox(
+                          value: ingredientesSelecionadosCheckbox[nomeItem] ??
+                              false,
+                          onChanged: (value) {
+                            setState(() {
+                              ingredientesSelecionadosCheckbox[nomeItem] =
+                                  value ?? false;
+                              if (value == true) {
+                                if (!ingredienteseSuasQuantidades
+                                    .containsKey(nomeItem))
+                                  ingredienteseSuasQuantidades[nomeItem] = 0.0;
+                              } else {
+                                ingredienteseSuasQuantidades.remove(nomeItem);
+                              }
+                            });
+                          },
+                        ),
+                        Expanded(
+                          child: Text(
+                            nomeItem,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        if (ingredientesSelecionadosCheckbox[nomeItem] == true)
+                          Flexible(
+                            child: Column(children: [
+                              RoundedTextField(
+                                labelText: 'Quantidade',
+                                hintText: 'Digite a quantidade.',
+                                controller: quantidadeNaReceita,
+                                icon: Icons.local_dining,
+                              ),
+                              const SizedBox(height: 5)
+                            ]),
+                          ),
+                      ],
                     );
-                  }),
+                  },
                 );
-              }),
+              },
             ),
-            ...ingredienteseSuasQuantidades.entries.map((entry) {
-              var nomeItem = entry.key;
-              var quantidade = entry.value;
-              return Column(
-                children: [
-                  RoundedTextField(
-                    labelText: 'Quantidade de $nomeItem',
-                    hintText: 'Digite a quantidade de $nomeItem a ser usada.',
-                    controller:
-                        TextEditingController(text: quantidade.toString()),
-                    icon: Icons.local_dining,
-                  ),
-                  const SizedBox(height: 10),
-                ],
-              );
-            }).toList(),
-
-            // ElevatedButton(
-            //   onPressed: _adicionarIngrediente,
-            //   child: const Text('Adicionar Ingrediente'),
-            // ),
-            // const SizedBox(height: 10),
+            const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
                 _cadastrarReceita(context);

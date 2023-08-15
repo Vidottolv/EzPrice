@@ -15,6 +15,9 @@ class _MenuDrawerState extends State<MenuDrawer> {
     return Drawer(
       child: ListView(padding: EdgeInsets.zero, children: [
         UserAccountsDrawerHeader(
+          decoration: const BoxDecoration(
+            color: Color.fromRGBO(231, 161, 122, 0.92),
+          ),
           accountName: FutureBuilder<String>(
             future: LoginController().getUserName(),
             builder: (context, snapshot) {
@@ -37,11 +40,13 @@ class _MenuDrawerState extends State<MenuDrawer> {
           ),
           currentAccountPicture: const CircleAvatar(
             child: Icon(Icons.person),
+            backgroundColor: Color.fromRGBO(225, 144, 99, 1),
+            foregroundColor: Colors.white,
           ),
         ),
         ListTile(
           title: const Text("Consultar Receitas"),
-          tileColor: Colors.black.withOpacity(0.6),
+          tileColor: const Color.fromRGBO(225, 144, 99, 1),
           leading: const Icon(Icons.list, color: Colors.white),
           onTap: () {
             Navigator.pushNamed(context, '/receita/visualizar');
@@ -65,7 +70,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
         // // ),
         ListTile(
           title: const Text("Sobre o EzPrice"),
-          tileColor: Colors.black.withOpacity(0.6),
+          tileColor: const Color.fromRGBO(225, 144, 99, 1),
           leading: const Icon(Icons.info, color: Colors.white),
           onTap: () {
             Navigator.pushNamed(context, '/sobre');
@@ -73,7 +78,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
         ),
         ListTile(
           title: const Text("Configurações"),
-          tileColor: Colors.black.withOpacity(0.6),
+          tileColor: const Color.fromRGBO(225, 144, 99, 1),
           leading: const Icon(Icons.settings, color: Colors.white),
           onTap: () {
             Navigator.pushNamed(context, '/configuracao');
@@ -81,7 +86,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
         ),
         ListTile(
           title: const Text("Menu"),
-          tileColor: Colors.black.withOpacity(0.6),
+          tileColor: const Color.fromRGBO(225, 144, 99, 1),
           leading: const Icon(
             Icons.home,
             color: Colors.white,
@@ -93,7 +98,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
         ),
         ListTile(
           title: const Text("Sair"),
-          tileColor: Colors.black.withOpacity(0.6),
+          tileColor: const Color.fromRGBO(225, 144, 99, 1),
           leading: const Icon(Icons.exit_to_app, color: Colors.white),
           onTap: () {
             Navigator.pushNamedAndRemoveUntil(
