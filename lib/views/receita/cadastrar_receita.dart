@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors_in_immutables, library_private_types_in_public_api
 
 //import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ezprice/controller/receita_controller.dart';
 import 'package:ezprice/model/model_ingrediente.dart';
@@ -55,10 +57,26 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
     int contador = 0;
 
     if (nomeReceita.isNotEmpty && ingredientes.isNotEmpty) {
-      double tempoGas = double.parse(gas);
-      double precoVenda = 1.10;
+      double tempoGas = (((double.parse(gas)/60)*0.225)/13)*110;
+      double precoVenda = 0.0;
 
+      for(String nomeItem in ingredientesSelecionadosCheckbox.keys ) {
+        if (ingredientesSelecionadosCheckbox[nomeItem] == true) {
+          double? quantidade = ingredienteseSuasQuantidades[nomeItem];
+
+        var ingredienteDoc = await FirebaseFirestore.instance
+        .collection('ingredientes')
+        .where('ingrediente', isEqualTo: nomeItem)
+        .get();
+
+        if (ingredienteDoc.docs.isNotEmpty) {
+          var preco = ingredienteDoc.docs.first['preco'];
+        precoVenda += ((quantidade! * preco) + (precoVenda * double.parse(lucro))/100);
+        }
+        }
+      }
       //     (1.10 * tempoGas) + (precoVenda * double.parse(lucro) / 100);
+
 
       var uuid = const Uuid();
 
@@ -145,7 +163,6 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
                   );
                 }
 
-                double precoVenda = 0.0;
                 for (var entry in ingredienteseSuasQuantidades.entries) {
                   var nomeItem = entry.key;
                   var quantidade = entry.value;
@@ -155,9 +172,6 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
                     (doc) => doc['ingrediente'] == nomeItem
                   );
 
-                  double precoIngrediente = ingredienteDoc[
-                      'preco']; // Substitua pelo nome correto do campo do preço
-                  precoVenda += quantidade * precoIngrediente;
                 }
 
                 return ListView.builder(
