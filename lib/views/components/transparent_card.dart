@@ -34,7 +34,6 @@ class TransparentCard extends StatelessWidget {
                 color: Colors.white,
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                fontFamily: 'Inknut Antiqua'
               ),
             ),
             SizedBox(height: 10),
@@ -43,7 +42,6 @@ class TransparentCard extends StatelessWidget {
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 16,
-                fontFamily: 'Inknut Antiqua',
               ),
             ),
             SizedBox(height: 16),

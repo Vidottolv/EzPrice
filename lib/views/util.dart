@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 void erro(context, String msg) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
-      backgroundColor: Colors.redAccent.withOpacity(0.4),
+      backgroundColor: const Color.fromRGBO(224, 111, 114, 1),
       content: Text(
         msg,
         style: const TextStyle(color: Colors.white),
@@ -22,7 +22,7 @@ void erro(context, String msg) {
 void sucesso(context, String msg) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
-      backgroundColor: Colors.greenAccent.withOpacity(0.4),
+      backgroundColor: const Color.fromRGBO(224, 111, 114, 1),
       content: Text(
         msg,
         style: const TextStyle(color: Colors.white),

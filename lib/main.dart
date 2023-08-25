@@ -1,5 +1,3 @@
-import 'package:ezprice/views/receita/teste.dart';
-
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +14,7 @@ import 'package:ezprice/views/receita/EdicaoReceita.dart';
 import 'package:ezprice/views/receita/precificacao.dart';
 import 'package:ezprice/views/receita/remover_receita.dart';
 import 'package:ezprice/views/receita/visualizar_receitas.dart';
+import 'package:ezprice/views/receita/infos_receita.dart';
 import 'package:ezprice/views/configuracao.dart';
 import 'package:ezprice/views/home.dart';
 import 'package:ezprice/views/sobre.dart';
@@ -52,7 +51,7 @@ Future<void> main() async {
             ),
         '/receita/remover_receita': (context) => RemoverReceita(),
         '/ingrediente/remover_ingrediente': (context) => remover_ingrediente(),
-        '/receita/teste':(context) => teste()
+        '/receita/infos_receita':(context) => Visualizar()
       },
     ),
   );

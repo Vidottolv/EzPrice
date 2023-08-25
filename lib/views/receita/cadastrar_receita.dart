@@ -175,6 +175,11 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
                     return Row(
                       children: [
                         Checkbox(
+                          activeColor: Colors.white,
+                          checkColor: Colors.black,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                            side: const BorderSide(color: Colors.white),
                           value: ingredientesSelecionadosCheckbox[nomeItem] ??
                               false,
                           onChanged: (value) {
@@ -191,15 +196,15 @@ class _CadastrarReceitaState extends State<CadastrarReceita> {
                             });
                           },
                         ),
-                        Expanded(
-                          child: Text(
-                            nomeItem,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
+                         Expanded(
+                           child: Text(
+                             nomeItem,
+                             style: const TextStyle(
+                               color: Colors.white,
+                               fontWeight: FontWeight.bold,
+                             ),
+                           ),
+                         ),
                         if (ingredientesSelecionadosCheckbox[nomeItem] == true)
                           Flexible(
                             child: Column(children: [

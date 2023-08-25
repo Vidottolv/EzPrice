@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:google_fonts/google_fonts.dart';
 import '../../controller/login_controller.dart';
 
 class MenuDrawer extends StatefulWidget {
@@ -22,7 +22,10 @@ class _MenuDrawerState extends State<MenuDrawer> {
             future: LoginController().getUserName(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
-                return Text(snapshot.data ?? '');
+                return Text(
+                  snapshot.data ?? '',
+                  style: GoogleFonts.inknutAntiqua(textStyle: const TextStyle(color: Colors.white), letterSpacing: 0.1, fontWeight: FontWeight.normal, wordSpacing: 2.0, height: 1.2)
+                );
               } else {
                 return const Text("Carregando...");
               }
@@ -32,7 +35,9 @@ class _MenuDrawerState extends State<MenuDrawer> {
             future: LoginController().getUserEmail(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
-                return Text(snapshot.data ?? '');
+                return Text(
+                  snapshot.data ?? '',
+                  style: GoogleFonts.inknutAntiqua(textStyle: const TextStyle(color: Colors.white), letterSpacing: 0.1, fontWeight: FontWeight.normal, wordSpacing: 2.0, height: 1.2));
               } else {
                 return const Text("Carregando...");
               }

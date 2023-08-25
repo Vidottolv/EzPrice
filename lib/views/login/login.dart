@@ -37,7 +37,7 @@ class Login extends StatelessWidget {
               children: [
                 Text(
                   'EzPrice',
-                  style: GoogleFonts.pacifico(
+                  style: GoogleFonts.inknutAntiqua(
                     color: Colors.white,
                     fontSize: 40,
                     fontWeight: FontWeight.bold,

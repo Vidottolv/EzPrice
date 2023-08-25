@@ -1,5 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 
+// import 'dart:ffi';
+// import 'dart:html';
+// import 'package:image_picker/image_picker.dart';
+
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ezprice/controller/login_controller.dart';
 import 'package:ezprice/views/components/rounded_text_field.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +20,18 @@ class CadastrarUsuario extends StatelessWidget {
 
   CadastrarUsuario({Key? key}) : super(key: key);
 
+
+  final FirebaseFirestore storage = FirebaseFirestore.instance;
+
+//  Future<void> uploadFoto(String path) async {
+//   File file = File(path);
+//   try {
+//     String ref = 'images/img-${DateTime.now().toString()}.jpg';
+//     await FirebaseFirestore.instance.doc(ref).set(file);
+//   } on FirebaseException catch(e) {
+//     throw Exception("Erro no upload.${e.code}");
+//   }
+//  }
   @override
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormState>();

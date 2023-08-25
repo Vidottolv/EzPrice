@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class RoundedTextField extends StatelessWidget {
   final String labelText;
@@ -28,9 +29,8 @@ class RoundedTextField extends StatelessWidget {
       ),
       child: TextField(
         controller: controller,
-        style: const TextStyle(
-          color: Colors.white,
-          fontFamily: 'Inknut Antiqua'),
+        style: GoogleFonts.inknutAntiqua(
+          color: Colors.white,),
         autofocus: true,
         keyboardType: keyboardType,
         obscureText: isPassword,
@@ -41,16 +41,16 @@ class RoundedTextField extends StatelessWidget {
             color: Colors.white,
           ),
           labelText: labelText,
-          labelStyle: const TextStyle(
+          labelStyle: GoogleFonts.inknutAntiqua(
             color: Colors.white,
             fontWeight: FontWeight.bold,
             fontSize: 15,
           ),
           hintText: hintText,
-          hintStyle: const TextStyle(
+          hintStyle: GoogleFonts.inknutAntiqua(
             color: Colors.white,
             fontWeight: FontWeight.bold,
-            fontSize: 15,
+            fontSize: 10,
           ),
         ),
       ),

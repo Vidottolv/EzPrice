@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 
 class AppTheme {
   static ThemeData theme = ThemeData(
@@ -9,31 +11,34 @@ class AppTheme {
       centerTitle: true,
       elevation: 0,
     ),
-    textTheme: const TextTheme(
-      bodyLarge: TextStyle(
-        color: Colors.white,
-        fontFamily: 'Inknut Antiqua'),
-      bodyMedium: TextStyle(
-        color: Colors.white,
-        fontFamily: 'Inknut Antiqua'),
-      displayLarge: TextStyle(
-        color: Colors.white,
-        fontFamily: 'Inknut Antiqua'),
-      displayMedium: TextStyle(
-        color: Colors.white,
-        fontFamily: 'Inknut Antiqua'),
-      displaySmall: TextStyle(
-        color: Colors.white,
-        fontFamily: 'Inknut Antiqua'),
-      headlineMedium: TextStyle(
-        color: Colors.white,
-        fontFamily: 'Inknut Antiqua'),
-      headlineSmall: TextStyle(
-        color: Colors.white,
-        fontFamily: 'Inknut Antiqua'),
-      titleLarge: TextStyle(
-        color: Colors.white,
-        fontFamily: 'Inknut Antiqua'),
+    textTheme: TextTheme(
+      displayLarge: GoogleFonts.inknutAntiqua(textStyle: const TextStyle(color: Colors.white), letterSpacing: 0.1, fontWeight: FontWeight.normal, wordSpacing: 2.0, height: 1.2),
+      displayMedium: GoogleFonts.inknutAntiqua(textStyle: const TextStyle(color: Colors.white),letterSpacing: 0.1, fontWeight: FontWeight.normal, wordSpacing: 2.0, height: 1.2),
+      displaySmall: GoogleFonts.inknutAntiqua(textStyle: const TextStyle(color: Colors.white),letterSpacing: 0.1, fontWeight: FontWeight.normal, wordSpacing: 2.0, height: 1.2),
+      headlineLarge: GoogleFonts.inknutAntiqua(textStyle: const TextStyle(color: Colors.white),letterSpacing: 0.1, fontWeight: FontWeight.normal, wordSpacing: 2.0, height: 1.2),
+      headlineMedium: GoogleFonts.inknutAntiqua(textStyle: const TextStyle(color: Colors.white),letterSpacing: 0.1, fontWeight: FontWeight.normal, wordSpacing: 2.0, height: 1.2),
+      headlineSmall: GoogleFonts.inknutAntiqua(textStyle: const TextStyle(color: Colors.white),letterSpacing: 0.1, fontWeight: FontWeight.normal, wordSpacing: 2.0, height: 1.2),
+      titleLarge: GoogleFonts.inknutAntiqua(textStyle: const TextStyle(color: Colors.white),letterSpacing: 0.1, fontWeight: FontWeight.normal, wordSpacing: 2.0, height: 1.2),
+      titleMedium: GoogleFonts.inknutAntiqua(textStyle: const TextStyle(color: Colors.white),letterSpacing: 0.1, fontWeight: FontWeight.normal, wordSpacing: 2.0, height: 1.2),
+      bodyLarge: GoogleFonts.inknutAntiqua(textStyle: const TextStyle(color: Colors.white),letterSpacing: 0.1, fontWeight: FontWeight.normal, wordSpacing: 2.0, height: 1.2),
+      bodyMedium: GoogleFonts.inknutAntiqua(textStyle: const TextStyle(color: Colors.white),letterSpacing: 0.1, fontWeight: FontWeight.normal, wordSpacing: 2.0, height: 1.2),
+      bodySmall: GoogleFonts.inknutAntiqua(textStyle: const TextStyle(color: Colors.white),letterSpacing: 0.1, fontWeight: FontWeight.normal, wordSpacing: 2.0, height: 1.2),
+      labelLarge: GoogleFonts.inknutAntiqua(textStyle: const TextStyle(color: Colors.white),letterSpacing: 0.1, fontWeight: FontWeight.normal, wordSpacing: 2.0, height: 1.2),
+      labelMedium: GoogleFonts.inknutAntiqua(textStyle: const TextStyle(color: Colors.white),letterSpacing: 0.1, fontWeight: FontWeight.normal, wordSpacing: 2.0, height: 1.2),
+      labelSmall: GoogleFonts.inknutAntiqua(textStyle: const TextStyle(color: Colors.white),letterSpacing: 0.1, fontWeight: FontWeight.normal, wordSpacing: 2.0, height: 1.2),
+      // headline1: GoogleFonts.inknutAntiqua(textStyle: const TextStyle(color: Colors.white)),
+      // headline2: GoogleFonts.inknutAntiqua(textStyle: const TextStyle(color: Colors.white)),
+      // headline3: GoogleFonts.inknutAntiqua(textStyle: const TextStyle(color: Colors.white)),
+      // headline4: GoogleFonts.inknutAntiqua(textStyle: const TextStyle(color: Colors.white)),
+      // headline5: GoogleFonts.inknutAntiqua(textStyle: const TextStyle(color: Colors.white)),
+      // headline6: GoogleFonts.inknutAntiqua(textStyle: const TextStyle(color: Colors.white)),
+      // subtitle1: GoogleFonts.inknutAntiqua(textStyle: const TextStyle(color: Colors.white)),
+      // subtitle2: GoogleFonts.inknutAntiqua(textStyle: const TextStyle(color: Colors.white)),
+      // bodyText1: GoogleFonts.inknutAntiqua(textStyle: const TextStyle(color: Colors.white)),
+      // bodyText2: GoogleFonts.inknutAntiqua(textStyle: const TextStyle(color: Colors.white)),
+      // caption: GoogleFonts.inknutAntiqua(textStyle: const TextStyle(color: Colors.white)),
+      // button: GoogleFonts.inknutAntiqua(textStyle: const TextStyle(color: Colors.white)),
+      // overline: GoogleFonts.inknutAntiqua(textStyle: const TextStyle(color: Colors.white)),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
@@ -44,10 +49,8 @@ class AppTheme {
         ),
       ),
     ),
-    fontFamily: 'Inknut Antiqua',
     visualDensity: VisualDensity.adaptivePlatformDensity,
   );
-
   static BoxDecoration backgroundDecoration = const BoxDecoration(
       color: Color.fromRGBO(231, 161, 122, 0.92),
   );

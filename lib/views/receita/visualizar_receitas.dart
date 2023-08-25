@@ -114,7 +114,7 @@ class _VisualizarReceitasState extends State<VisualizarReceitas> {
                                               color: Colors.white,
                                             ),
                                           ),
-                                          const SizedBox(height: 16),
+                                          const SizedBox(height: 10),
                                           Container(
                                             decoration: BoxDecoration(
                                               borderRadius:
@@ -182,7 +182,40 @@ class _VisualizarReceitasState extends State<VisualizarReceitas> {
                                               ),
                                             ),
                                           ),
-                                          const SizedBox(height: 16),
+                                          const SizedBox(height: 10),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
+                                              border: Border.all(
+                                                color: Colors.white,
+                                                width: 1.0,
+                                              ),
+                                            ),
+                                            child: ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                backgroundColor: const Color.fromRGBO(225, 144, 99, 1),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0),
+                                                ),
+                                              ),
+                                              onPressed: () {
+                                                // Passar o idReceita para a função de remover
+                                                Navigator.pushNamed(context,
+                                                    '/receita/infos_receita',
+                                                    arguments: idReceita);
+                                              },
+                                              child: const Text(
+                                                'Visualizar',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(height: 10),
                                           IconButton(
                                             icon: const Icon(
                                               Icons.close,

@@ -83,7 +83,7 @@ class _VisualizarIngredientesState extends State<VisualizarIngredientes> {
                               width: 1.0,
                             ),
                           ),
-                          color: Colors.transparent,
+                          color: const Color.fromRGBO(231, 161, 122, 0.92),
                           child: InkWell(
                             onTap: () {
                               showDialog(
@@ -98,7 +98,7 @@ class _VisualizarIngredientesState extends State<VisualizarIngredientes> {
                                       ),
                                     ),
                                     backgroundColor:
-                                        Colors.black87.withOpacity(0.8),
+                                        const Color.fromRGBO(231, 161, 122, 0.92),
                                     child: Padding(
                                       padding: const EdgeInsets.all(16.0),
                                       child: Column(
@@ -120,12 +120,10 @@ class _VisualizarIngredientesState extends State<VisualizarIngredientes> {
                                                 width: 1.0,
                                               ),
                                             ),
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 10),
                                             child: ElevatedButton(
                                               style: ElevatedButton.styleFrom(
                                                 backgroundColor:
-                                                    Colors.transparent,
+                                                    const Color.fromRGBO(225, 144, 99, 1),
                                                 shape: RoundedRectangleBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -158,12 +156,10 @@ class _VisualizarIngredientesState extends State<VisualizarIngredientes> {
                                                 width: 1.0,
                                               ),
                                             ),
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 10),
                                             child: ElevatedButton(
                                               style: ElevatedButton.styleFrom(
                                                 backgroundColor:
-                                                    Colors.transparent,
+                                                    const Color.fromRGBO(225, 144, 99, 1),
                                                 shape: RoundedRectangleBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
